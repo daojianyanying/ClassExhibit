@@ -1,0 +1,175 @@
+ClassFile{
+	MagicNumber //4个字节
+	MinorVersion //2个字节
+	MajorVersion //2个字节
+	ConstantPoolNumber //2个字节
+	ConstantPool //n个字节
+	ClassAccessFlag //2个字节
+	ThisClass //2个字节
+	SuperClass //2个字节
+	InterfaceNumber //2个字节
+	InterfacesInfo //n个字节
+	MethodNumber //2个字节
+	MethodsInfo //n个字节
+	AttributeNumber //2个字节
+	AttributesInfo //n个字节	
+}
+
+常量池的信息分类:
+	Utf8{
+		ta=1 //1
+		length //2
+		bytes //1
+	}
+	Integer{
+		ta=3 //1
+		bytes //4
+	}
+	Float{
+		ta=4 //1
+		bytes //4
+	}
+	Long{
+		ta=5 //1
+		bytes //8
+	}
+	Double{
+		ta=6 //1
+		bytes //8
+	}
+	Class{
+		ta=7 //1
+		bytes //2
+	}
+	String{
+		ta=8 //1
+		bytes //2
+	}
+	
+	FieldRef{
+		ta=9 //1
+		index //2  字段的类或者接口的描述符 class_info的索引项
+		index //2 指向字段描述符NameAndType 的索引项
+	}
+	MethodRef{
+		ta=10 //1
+		index //2  指向方法的类描述符 class_info的索引项
+		index //2 指向名称及类型描述符NameAndType 的索引项
+	}
+	InterfaceMethodRef{
+		ta=11 //1 
+		index //2  指向声明方法的类描述符 class_info的索引项
+		index //2 指向名称及类型描述符NameAndType 的索引项
+	}
+	NameAndType{
+		ta=12 //1 
+		index //2  指向字段和方法名常量的索引项
+		index //2 指向该字段或方法描述符常量项的索引项
+	}
+	MethodHandle{
+		tag=15 //1
+		reference_kind //1 范围必须在1-9的范围内，他表示句柄的类型 方法句柄类型决定句柄字节码行为
+		reference_index //2  必须是对常量池表的有效索引
+	}
+	Method_Type{
+		tag=16 //1
+		descriptor_index //2 必须是对常量池的有效索引
+	}
+	InvokeDynamc{
+		tag=18 //1
+		bootstrap_method_attr_index; //2
+		name_and_type_index; //2
+	}
+	
+字段描述符：
+	B					byte 			有符号的字节
+	C					char
+	D					double			
+	F					float
+	I					int
+	J					long
+	L ClassName;		reference		ClassName类的实例
+	S					short		
+	Z					boolean
+	[					reference		一个一维数组
+类访问和属性修饰符标志:
+	0x0001 	public
+	0x0010	final
+	0x0020	super
+	0x0200	interface
+	0x0400	abstract
+	0x1000	synthetic
+	0x2000	annotation
+	0x4000	enum
+
+field_info{
+	access_flags //2
+	name_index //2
+	descriptor_index //2
+	attribute_count //2
+	attribute_info attribute[attribute_count] //不一定
+}
+
+Method_info{
+	access_flags //2
+	name_index //2
+	descriptor_index //2
+	attribute_count //2
+	attribute_info attribute[attribute_count]
+}
+
+attribute_info{
+	attribute_name_index //2
+	attribute_length //4
+	info [attribute_length] //1
+}
+
+Code_attribute{
+	attribute_name_index //2
+	attribute_length //4
+	max_stack //2
+	max_locals //2
+	code_length //4
+	code [code_length] //1
+	exception_table_length; //2
+	{
+		start_pc //2
+		end_pc //2
+		handler_pc //2
+		catch_type //2
+	}exception_table [exception_table_length]
+	attributes_count //2
+	attribute_info attributes[attribute_count]
+}
+
+LineNumberTable_attribute{
+	attribute_name_index //2
+	attribute_length //4
+	line_number_table_length //2
+	{
+		start_pc //2
+		line_number //2
+	}line_number_table[line_number_table_length]
+	
+}
+
+LocalVariableTable_attribute{
+	attribute_name_index //2
+	attribute_length //4
+	local_variable_table_lenth //2
+	{
+		start_pc //2
+		length //2
+		name_index //2
+		descriptor_index //2
+		index //2
+	}local_variable_table[local_variable_table_lenth]
+}
+
+SourceFile_attribute{
+	attribute_name_index //2
+	attribute_length //4
+	sourcefile_index //2
+}
+	
+	
