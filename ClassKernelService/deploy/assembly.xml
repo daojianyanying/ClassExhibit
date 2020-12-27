@@ -1,0 +1,42 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/3.1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/3.1.0 http://maven.apache.org/xsd/assembly-3.1.0.xsd">
+    <!--
+    id与formats
+
+    formats是assembly插件支持的打包文件格式，有zip、tar、tar.gz、tar.bz2、jar、war。可以同时定义多个format。
+    id则是添加到打包文件名的标识符，用来做后缀。
+    也就是说，如果按上面的配置，生成的文件就是artifactId−{artifactId}-artifactId−{version}-assembly.tar.gz。
+
+    fileSets/fileSet
+    用来设置一组文件在打包时的属性。
+
+    directory：源目录的路径。
+    includes/excludes：设定包含或排除哪些文件，支持通配符。
+    fileMode：指定该目录下的文件属性，采用Unix八进制描述法，默认值是0644。
+    outputDirectory：生成目录的路径。
+
+    files/file
+    与fileSets大致相同，不过是指定单个文件，并且还可以通过destName属性来设置与源文件不同的名称。
+    dependencySets/dependencySet
+    用来设置工程依赖文件在打包时的属性。也与fileSets大致相同，不过还有两个特殊的配置：
+
+    unpack：布尔值，false表示将依赖以原来的JAR形式打包，true则表示将依赖解成*.class文件的目录结构打包。
+    scope：表示符合哪个作用范围的依赖会被打包进去。compile与provided都不用管，一般是写runtime。
+
+    按照以上配置打包好后，将.tar.gz文件上传到服务器，解压之后就会得到bin、conf、lib等规范化的目录结构，十分方便。
+    -->
+    <id>assembly</id>
+    <formats>
+        <!--指定打包类型-->
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <directory>src/main/java</directory> <!-- 指定归档文件（要打的jar包）要包含的目录（下的文件及文件夹） -->
+            <outputDirectory>class</outputDirectory> <!-- 指定要将当前目录（<directory>标签中的目录放在归档文件（要打的jar包）bin目录下） -->
+        </fileSet>
+    </fileSets>
+</assembly>
