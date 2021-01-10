@@ -1,6 +1,7 @@
 package com.common.people.klas.kernel.read;
 
 import java.io.*;
+import java.util.*;
 
 public class ReadClass {
     private static final String CLASS_PATH = "D:\\tools-idea\\github\\ClassKernel\\ClassKernelService\\target\\classes\\com\\common\\people\\klas\\kernel\\core\\Main.txt";
@@ -9,12 +10,18 @@ public class ReadClass {
         try {
             FileInputStream inputStream = new FileInputStream(new File(CLASS_PATH));
             FileReader fileReader = new FileReader(new File(CLASS_PATH));
-            ReadClassContent(inputStream);
-            ReadClassContent(fileReader);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(CLASS_PATH));
+
+            Map<Integer,ArrayList<String>> map = ReadClassContent(bufferedReader);
+            ResolveClass solver = new ResolveClass();
+            solver.resolve(map);
+            //ReadClassContent(fileReader);
+            //输出解析后的Klass对象
+            System.out.println(solver.getKlass().toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ReadClassContent();
+        //ReadClassContent();
     }
 
     public static void ReadClassContent(){
@@ -42,15 +49,39 @@ public class ReadClass {
 
     public static void ReadClassContent(FileReader fileReader){
         char[] chars = new char[1024];
-
+        int len;
         try {
-            while( fileReader.read(chars) > 0){
-                System.out.println(chars);
+            while((len =  fileReader.read(chars)) > 0){
+                String content = new String(chars,0,chars.length);
+                System.out.println(new String(content.getBytes("UTF-8")));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     *
+     * @param bufferedReader
+     * @return
+     */
+    public static Map<Integer,ArrayList<String>> ReadClassContent(BufferedReader  bufferedReader){
+        int len;
+        Integer lineNum = 0;
+        HashMap<Integer, ArrayList<String>> classMap = new HashMap();
+
+        try {
+            while((len = bufferedReader.read()) != -1){
+                String oneLine = bufferedReader.readLine();
+                String[] strs = new String(oneLine.getBytes(),9,39).split(" ");
+                ArrayList<String> classArrayList = new ArrayList<>();
+                Collections.addAll(classArrayList, strs);
+                classMap.put(lineNum++,classArrayList);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return classMap;
+    }
 
 }
