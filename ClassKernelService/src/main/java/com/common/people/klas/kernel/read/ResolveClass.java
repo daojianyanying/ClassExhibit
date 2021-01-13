@@ -18,8 +18,8 @@ public class ResolveClass {
 
 
     public void resolveBasic(ArrayList<String> list){
-        this.klass.setMagic(list.get(0) + list.get(1));
-        this.klass.setMinor_version(Integer.parseInt(list.get(2)));
-        this.klass.setMajor_version(Integer.parseInt(list.get(3),16));
+        this.klass.setMagic(list.get(0) + list.get(1) + list.get(2) + list.get(3));
+        this.klass.setMinor_version(Integer.parseInt(list.get(4)+list.get(5)));
+        this.klass.setMajor_version(Integer.parseInt(list.get(6)+list.get(7),16));
     }
 }

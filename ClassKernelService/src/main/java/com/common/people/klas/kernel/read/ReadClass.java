@@ -73,9 +73,15 @@ public class ReadClass {
         try {
             while((len = bufferedReader.read()) != -1){
                 String oneLine = bufferedReader.readLine();
-                String[] strs = new String(oneLine.getBytes(),9,39).split(" ");
+                String[] hexStrings = new String(oneLine.getBytes(),9,39).split(" ");
+                String[] demergeHexStrings = new String[16];
+                for(int i=0; i<hexStrings.length; i++){
+                    demergeHexStrings[2*i] = new String(hexStrings[i].getBytes(),0,2);
+                    demergeHexStrings[2*i+1] = new String(hexStrings[i].getBytes(),2,2);
+
+                }
                 ArrayList<String> classArrayList = new ArrayList<>();
-                Collections.addAll(classArrayList, strs);
+                Collections.addAll(classArrayList, demergeHexStrings);
                 classMap.put(lineNum++,classArrayList);
             }
         } catch (IOException e) {
