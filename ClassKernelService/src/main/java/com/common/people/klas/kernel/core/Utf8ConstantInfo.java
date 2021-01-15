@@ -2,7 +2,7 @@ package com.common.people.klas.kernel.core;
 
 import java.util.Arrays;
 
-public class Utf8ConstantInfo extends Constant {
+public class Utf8ConstantInfo implements Constant {
     private String tag;
     //显示XXD生成的字节码文件的字面值
     private String classValue;
@@ -38,5 +38,10 @@ public class Utf8ConstantInfo extends Constant {
                 ", length=" + length +
                 ", bytes=" + Arrays.toString(bytes) +
                 '}';
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
     }
 }
