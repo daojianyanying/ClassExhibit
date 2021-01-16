@@ -1,2 +1,2 @@
-# ClassKernel
+# ClassExhibit
 explain of class
