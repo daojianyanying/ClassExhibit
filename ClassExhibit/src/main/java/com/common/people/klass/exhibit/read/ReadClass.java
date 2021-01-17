@@ -4,7 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class ReadClass {
-    private static final String CLASS_PATH = "D:\\tools-idea\\github\\ClassKernel\\ClassKernelService\\target\\classes\\com\\common\\people\\klas\\kernel\\core\\Main.txt";
+    private static final String CLASS_PATH = "D:\\tools-idea\\github\\ClassExhibit\\ClassExhibit\\target\\classes\\com\\" +
+            "common\\people\\klass\\exhibit\\core\\Main.txt";
 
     public static void main(String[] args) {
         try {
