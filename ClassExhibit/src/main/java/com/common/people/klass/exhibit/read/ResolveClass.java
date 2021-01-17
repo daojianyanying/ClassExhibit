@@ -282,8 +282,8 @@ public class ResolveClass {
                 }
             }
         }
-        System.out.println(constants.size());
-        return 0;
+        constantPool.setConstants(constants);
+        return lineIndex;
     }
 
     public String mergeStringArray(String[] mergeArrayFront,String[] mergerArrayAfter){
