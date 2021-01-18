@@ -10,7 +10,6 @@ public class ResolveClass {
 
     public void resolve(Map<Integer, ArrayList<String>> classMap){
         resolveConstantPool(classMap,resolveBasic(classMap.get(lineIndex)));
-
     }
 
     public  Klass getKlass(){
@@ -30,9 +29,9 @@ public class ResolveClass {
         constants.add(null);
         //读取常量池的数量
         String constantCount = classMap.get(lineIndex).get(locationIndex) + classMap.get(lineIndex).get(++locationIndex);
-        constantPool.setConstantCount(Integer.parseInt(constantCount,16) - 1);
+        klass.setConstant_count(Integer.parseInt(constantCount,16) - 1);
         //读取常量
-        for(int count=0; count<constantPool.getConstantCount(); count++){
+        for(int count=0; count<klass.getConstant_count(); count++){
             String tag = null;
             if(locationIndex == 15){
                 lineIndex++;
@@ -223,6 +222,7 @@ public class ResolveClass {
             }
         }
         constantPool.setConstants(constants);
+        klass.setConstants(constantPool);
         return lineIndex;
     }
 
