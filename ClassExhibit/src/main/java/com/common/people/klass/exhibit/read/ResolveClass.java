@@ -10,6 +10,7 @@ public class ResolveClass {
 
     public void resolve(Map<Integer, ArrayList<String>> classMap){
         resolveConstantPool(classMap,resolveBasic(classMap.get(lineIndex)));
+        System.out.println("aaa");
     }
 
     public  Klass getKlass(){
