@@ -1,6 +1,9 @@
 package com.common.people.klass.exhibit.read;
 
 import com.common.people.klass.exhibit.core.*;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -57,13 +60,15 @@ public class ResolveClass {
                     for(int i=0; i<length; i++){
                         locationIndex = resetLocationIndex(locationIndex);
                         classValues_2[i] = classMap.get(lineIndex).get(locationIndex);
-                        //bytes[i] = Integer.parseInt(classValues_2[i]);
-                        //TODO
                     }
                     utf8Info.setLength(length);
                     utf8Info.setClassValue(tag + mergeStringArray(classValues_1, classValues_2));
-                    //TODO
-                    utf8Info.setBytes(new byte[]{'T','O','D','O'});
+                    try {
+                        utf8Info.setBytes(Hex.decodeHex(mergeStringArray(classValues_2).toCharArray()));
+                    } catch (DecoderException e) {
+                        e.printStackTrace();
+                        System.out.println("utf-8转bytes异常");
+                    }
                     constants.add(utf8Info);
                     break;
                 }case "03": {

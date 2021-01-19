@@ -17,7 +17,7 @@ public class ReadClass {
 
             Map<Integer,ArrayList<String>> map = ReadClassContent(bufferedReader);
             ResolveClass solver = new ResolveClass();
-            Klass resolve = solver.resolve(map);
+            solver.resolve(map);
             //ReadClassContent(fileReader);
             //输出解析后的Klass对象
             System.out.println(solver.getKlass().toString());
