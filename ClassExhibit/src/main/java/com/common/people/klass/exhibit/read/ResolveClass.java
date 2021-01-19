@@ -222,7 +222,7 @@ public class ResolveClass {
             }
         }
         constantPool.setConstants(constants);
-        klass.setConstants(constantPool);
+        klass.setConstant_pool(constantPool);
         return lineIndex;
     }
 

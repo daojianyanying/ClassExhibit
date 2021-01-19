@@ -13,7 +13,7 @@ public class Klass {
     //常量个数
     private Integer constant_count;
     //常量池
-    private ConstantPool constants;
+    private ConstantPool constant_pool;
     //类的访问控制符权限
     private String access_flags;
     //类名
