@@ -8,8 +8,9 @@ public class ResolveClass {
     private final Klass klass = new Klass(); //这里new和不new有什么区别
     private Integer lineIndex = 0;
 
-    public void resolve(Map<Integer, ArrayList<String>> classMap){
+    public Klass resolve(Map<Integer, ArrayList<String>> classMap){
         resolveConstantPool(classMap,resolveBasic(classMap.get(lineIndex)));
+        return this.klass;
     }
 
     public  Klass getKlass(){

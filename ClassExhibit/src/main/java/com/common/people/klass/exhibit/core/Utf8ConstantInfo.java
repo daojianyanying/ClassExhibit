@@ -26,17 +26,6 @@ public class Utf8ConstantInfo implements Constant {
     }
 
     @Override
-    public String toString() {
-        return "Utf8ConstantInfo{" +
-                "tag='" + TAG + '\'' +
-                ", classValue='" + classValue + '\'' +
-                ", description='" + DESCRIPTION + '\'' +
-                ", length=" + length +
-                ", bytes=" + Arrays.toString(bytes) +
-                '}';
-    }
-
-    @Override
     public String getDescription() {
         return DESCRIPTION;
     }
