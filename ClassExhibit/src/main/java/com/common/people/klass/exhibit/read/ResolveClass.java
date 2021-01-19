@@ -106,6 +106,7 @@ public class ResolveClass {
                             .setHighBytes(new byte[]{'T','O','D','O'})
                             .setLowBytes(new byte[]{'T','O','D','O'});
                     constants.add(longInfo);
+                    constants.add(null);
                     break;
                 }case "06": {
                     DoubleConstantInfo doubleInfo = new DoubleConstantInfo();
@@ -118,6 +119,7 @@ public class ResolveClass {
                             .setHighBytes(new byte[]{'T','O','D','O'})
                             .setLowBytes(new byte[]{'T','O','D','O'});
                     constants.add(doubleInfo);
+                    constants.add(null);
                     break;
                 }case "07": {
                     ClassConstantInfo classInfo = new ClassConstantInfo();
