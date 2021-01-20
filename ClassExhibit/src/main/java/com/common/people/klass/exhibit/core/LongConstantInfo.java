@@ -7,6 +7,7 @@ public class LongConstantInfo implements  Constant{
     private byte[] highBytes = new byte[4];
     private byte[] lowBytes = new byte[4];
     private String classValue;
+    private long realValue;
 
     public LongConstantInfo setClassValue(String classValue){
         this.classValue = classValue;
@@ -20,6 +21,11 @@ public class LongConstantInfo implements  Constant{
 
     public LongConstantInfo setLowBytes(byte[] lowBytes){
         this.lowBytes = lowBytes;
+        return this;
+    }
+
+    public LongConstantInfo setRealValue(long realValue){
+        this.realValue = realValue;
         return this;
     }
     @Override

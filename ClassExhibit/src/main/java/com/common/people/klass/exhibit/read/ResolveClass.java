@@ -10,9 +10,11 @@ import java.util.Map;
 public class ResolveClass {
     private final Klass klass = new Klass(); //这里new和不new有什么区别
     private Integer lineIndex = 0;
+    private Integer locationIndex = 0;
 
     public Klass resolve(Map<Integer, ArrayList<String>> classMap){
-        resolveConstantPool(classMap,resolveBasic(classMap.get(lineIndex)));
+        resolveBasic(classMap.get(lineIndex));
+        resolveConstantPool(classMap);
         return this.klass;
     }
 
@@ -22,12 +24,12 @@ public class ResolveClass {
 
 
     public Integer resolveBasic(ArrayList<String> list){
-        this.klass.setMagic(list.get(0) + list.get(1) + list.get(2) + list.get(3));
-        this.klass.setMinor_version(Integer.parseInt(list.get(4)+list.get(5)));
-        this.klass.setMajor_version(Integer.parseInt(list.get(6)+list.get(7),16));
-        return 8;
+        this.klass.setMagic(list.get(locationIndex++) + list.get(locationIndex++) + list.get(locationIndex++) + list.get(locationIndex++));
+        this.klass.setMinor_version(Integer.parseInt(list.get(locationIndex++)+list.get(locationIndex++)));
+        this.klass.setMajor_version(Integer.parseInt(list.get(locationIndex++)+list.get(locationIndex++),16));
+        return locationIndex;
     }
-    public Integer resolveConstantPool(Map<Integer, ArrayList<String>> classMap,Integer locationIndex){
+    public Integer resolveConstantPool(Map<Integer, ArrayList<String>> classMap){
         ConstantPool constantPool = new ConstantPool();
         ArrayList<Constant> constants = new ArrayList<>();
         constants.add(null);
@@ -80,7 +82,8 @@ public class ResolveClass {
                     }
                     integerInfo.setClassValue(tag + mergeStringArray(classValues));
                     //TODO
-                    integerInfo.setBytes(new byte[]{'T','O','D','O'});
+                    integerInfo.setBytes(mergeStringArray(classValues).getBytes())
+                            .setRealValue(Integer.parseInt(mergeStringArray(classValues), 16));
                     constants.add(integerInfo);
                     break;
                 }case "04": {
@@ -91,8 +94,8 @@ public class ResolveClass {
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     floatInfo.setClassValue(tag + mergeStringArray(classValues))
-                            //TODO
-                            .setBytes(new byte[]{'T','O','D','O'});
+                            .setBytes(mergeStringArray(classValues).getBytes())
+                            .setRealValue(Float.intBitsToFloat(Integer.parseInt(mergeStringArray(classValues),16)));
                     constants.add(floatInfo);
                     break;
                 }case "05": {
@@ -103,10 +106,12 @@ public class ResolveClass {
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     longInfo.setClassValue(tag + mergeStringArray(classValues))
-                            .setHighBytes(new byte[]{'T','O','D','O'})
-                            .setLowBytes(new byte[]{'T','O','D','O'});
+                            .setHighBytes(new String(mergeStringArray(classValues).getBytes(),0,8).getBytes())
+                            .setLowBytes(new String(mergeStringArray(classValues).getBytes(),0,8).getBytes())
+                            .setRealValue(Long.parseLong(mergeStringArray(classValues), 16));
                     constants.add(longInfo);
                     constants.add(null);
+                    count++;
                     break;
                 }case "06": {
                     DoubleConstantInfo doubleInfo = new DoubleConstantInfo();
@@ -116,10 +121,12 @@ public class ResolveClass {
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     doubleInfo.setClassValue(tag + mergeStringArray(classValues))
-                            .setHighBytes(new byte[]{'T','O','D','O'})
-                            .setLowBytes(new byte[]{'T','O','D','O'});
+                            .setHighBytes(new String(mergeStringArray(classValues).getBytes(),0,8).getBytes())
+                            .setLowBytes(new String(mergeStringArray(classValues).getBytes(),8,8).getBytes())
+                            .setRealValue(Double.longBitsToDouble(Long.parseLong(mergeStringArray(classValues), 16)));
                     constants.add(doubleInfo);
                     constants.add(null);
+                    count++;
                     break;
                 }case "07": {
                     ClassConstantInfo classInfo = new ClassConstantInfo();

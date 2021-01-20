@@ -9,6 +9,7 @@ public class DoubleConstantInfo implements Constant{
     private byte[] lowBytes = new byte[4];
 
     private String classValue;
+    private double realValue;
 
     public DoubleConstantInfo setClassValue(String classValue){
         this.classValue = classValue;
@@ -22,6 +23,11 @@ public class DoubleConstantInfo implements Constant{
 
     public DoubleConstantInfo setLowBytes(byte[] lowBytes){
         this.lowBytes = lowBytes;
+        return this;
+    }
+
+    public DoubleConstantInfo setRealValue(double realValue){
+        this.realValue = realValue;
         return this;
     }
     @Override

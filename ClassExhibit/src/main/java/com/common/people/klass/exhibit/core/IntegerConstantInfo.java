@@ -6,6 +6,7 @@ public class IntegerConstantInfo implements Constant{
 
     private byte[] bytes = new byte[4];
     private String classValue;
+    private int realValue;
 
     public void setClassValue(String classValue){
         this.classValue = classValue;
@@ -15,6 +16,12 @@ public class IntegerConstantInfo implements Constant{
         this.bytes = bytes;
         return this;
     }
+
+    public IntegerConstantInfo setRealValue(int realValue){
+        this.realValue = realValue;
+        return this;
+    }
+
     @Override
     public String getDescription() {
         return DESCRIPTION;
