@@ -53,14 +53,14 @@ public class ResolveClass {
                     Utf8ConstantInfo utf8Info = new Utf8ConstantInfo();
                     String[]  classValues_1 = new String[2];
                     for(int i=0; i<2; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues_1[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     Integer length = Integer.parseInt(classValues_1[0]+classValues_1[1],16);
                     String[] classValues_2 = new String[length];
                     byte[] bytes = new byte[length];
                     for(int i=0; i<length; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues_2[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     utf8Info.setLength(length);
@@ -77,7 +77,7 @@ public class ResolveClass {
                     IntegerConstantInfo integerInfo = new IntegerConstantInfo();
                     String[] classValues = new String[2];
                     for(int i=0; i<classValues.length; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     integerInfo.setClassValue(tag + mergeStringArray(classValues));
@@ -90,7 +90,7 @@ public class ResolveClass {
                     FloatConstantInfo floatInfo = new FloatConstantInfo();
                     String[] classValues = new String[2];
                     for(int i=0; i<2; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     floatInfo.setClassValue(tag + mergeStringArray(classValues))
@@ -102,7 +102,7 @@ public class ResolveClass {
                     LongConstantInfo longInfo = new LongConstantInfo();
                     String classValues[] = new String[8];
                     for(int i=0; i<classValues.length; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     longInfo.setClassValue(tag + mergeStringArray(classValues))
@@ -117,7 +117,7 @@ public class ResolveClass {
                     DoubleConstantInfo doubleInfo = new DoubleConstantInfo();
                     String classValues[] = new String[8];
                     for(int i=0; i<classValues.length; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     doubleInfo.setClassValue(tag + mergeStringArray(classValues))
@@ -132,7 +132,7 @@ public class ResolveClass {
                     ClassConstantInfo classInfo = new ClassConstantInfo();
                     String[]  classValues = new String[2];
                     for(int i=0; i<2; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     classInfo.setClassValue(tag + classValues[0] + classValues[1]);
@@ -143,7 +143,7 @@ public class ResolveClass {
                     StringConstantInfo stringInfo = new StringConstantInfo();
                     String[]  classValues = new String[2];
                     for(int i=0; i<2; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     stringInfo.setClassValue(tag + classValues[0] + classValues[1]);
@@ -154,7 +154,7 @@ public class ResolveClass {
                     FieldrefConstantInfo fieldref = new FieldrefConstantInfo();
                     String[]  classValues = new String[4];
                     for(int i=0; i<4; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     fieldref.setClassValue(tag + classValues[0] + classValues[1] + classValues[2] + classValues[3]);
@@ -166,7 +166,7 @@ public class ResolveClass {
                     MethodrefConstantInfo methodref = new MethodrefConstantInfo();
                     String[]  classValues = new String[4];
                     for(int i=0; i<4; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     methodref.setClassValue(tag + classValues[0] + classValues[1] + classValues[2] + classValues[3]);
@@ -178,7 +178,7 @@ public class ResolveClass {
                     InterfaceMethodrefConstantInfo interfaceMethodrefInfo = new InterfaceMethodrefConstantInfo();
                     String[] classValues = new String[4];
                     for(int i=0; i<classValues.length; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     interfaceMethodrefInfo.setClassValue(tag + mergeStringArray(classValues))
@@ -190,7 +190,7 @@ public class ResolveClass {
                     NameAndTypeConstantInfo nameAndTypeInfo = new NameAndTypeConstantInfo();
                     String[] classValues = new String[4];
                     for(int i=0; i<classValues.length; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     nameAndTypeInfo.setClassValue(tag + mergeStringArray(classValues))
@@ -202,7 +202,7 @@ public class ResolveClass {
                     MethodHandleConstantInfo methodHandleInfo = new MethodHandleConstantInfo();
                     String[] classValues = new String[3];
                     for(int i=0; i<classValues.length; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     methodHandleInfo.setClassValue(tag + mergeStringArray(classValues))
@@ -214,7 +214,7 @@ public class ResolveClass {
                     MethodTypeConstantInfo methodTypeInfo = new MethodTypeConstantInfo();
                     String[] classValues = new String[2];
                     for(int i=0; i<classValues.length; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     methodTypeInfo.setClassValue(tag + mergeStringArray(classValues))
@@ -225,7 +225,7 @@ public class ResolveClass {
                     InvokeDynamicConstantInfo invokeDynamicInfo = new InvokeDynamicConstantInfo();
                     String[] classValues = new String[4];
                     for(int i=0; i<classValues.length; i++){
-                        locationIndex = resetLocationIndex(locationIndex);
+                        locationIndex = resetLocationIndex(locationIndex,16);
                         classValues[i] = classMap.get(lineIndex).get(locationIndex);
                     }
                     invokeDynamicInfo.setClassValue(tag + mergeStringArray(classValues))
@@ -263,9 +263,9 @@ public class ResolveClass {
         return mergedResult;
     }
 
-    public Integer resetLocationIndex(Integer locationIndex){
+    public Integer resetLocationIndex(Integer locationIndex, int limint){
         locationIndex++;
-        if(locationIndex == 16){
+        if(locationIndex == limint){
             lineIndex++;
             locationIndex = 0;
         }
