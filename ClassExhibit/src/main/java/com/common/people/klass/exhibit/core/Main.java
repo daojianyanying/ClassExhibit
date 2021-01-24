@@ -8,6 +8,7 @@ public class Main {
         long l = 41747474174L;
         float f = 2.36f;
         int i =9;
+        Constant c1 = new StringConstantInfo();
         System.out.println("这是一个主类！！！" + Charset.defaultCharset());
         System.out.println(f);
         System.out.println(i);

@@ -2,6 +2,8 @@ package com.common.people.klass.exhibit.core;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+
 @Data
 public class Klass {
     //jdk版本对应的魔术
@@ -23,7 +25,7 @@ public class Klass {
     //接口个数
     private Integer interface_count;
     //接口
-    private KInterface interfaces;
+    private ArrayList<KInterface> interfaces;
     //域的个数
     private Integer field_count;
     //域
@@ -35,5 +37,5 @@ public class Klass {
     //附加属性个数
     private Integer attribute_count;
     //附加属性
-    private Attribute attributes;
+    private Attribute additionalAttributes;
 }

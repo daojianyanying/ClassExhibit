@@ -7,7 +7,7 @@ import java.util.*;
 
 public class ReadClass {
     private static final String CLASS_PATH = "D:\\tools-idea\\github\\ClassExhibit\\ClassExhibit\\target\\classes\\com\\" +
-            "common\\people\\klass\\exhibit\\core\\Main.txt";
+            "common\\people\\klass\\exhibit\\core\\FieldrefConstantInfo.txt";
 
     public static void main(String[] args) {
         try {

@@ -15,6 +15,8 @@ public class ResolveClass {
     public Klass resolve(Map<Integer, ArrayList<String>> classMap){
         resolveBasic(classMap.get(lineIndex));
         resolveConstantPool(classMap);
+        resolveAccessFlag(classMap);
+        resolveKlassName(classMap);
         return this.klass;
     }
 
@@ -111,7 +113,7 @@ public class ResolveClass {
                             .setRealValue(Long.parseLong(mergeStringArray(classValues), 16));
                     constants.add(longInfo);
                     constants.add(null);
-                    count++;
+                    //count++;
                     break;
                 }case "06": {
                     DoubleConstantInfo doubleInfo = new DoubleConstantInfo();
@@ -126,7 +128,7 @@ public class ResolveClass {
                             .setRealValue(Double.longBitsToDouble(Long.parseLong(mergeStringArray(classValues), 16)));
                     constants.add(doubleInfo);
                     constants.add(null);
-                    count++;
+                    //count++;
                     break;
                 }case "07": {
                     ClassConstantInfo classInfo = new ClassConstantInfo();
@@ -270,5 +272,93 @@ public class ResolveClass {
             locationIndex = 0;
         }
         return locationIndex;
+    }
+
+    private boolean resolveAccessFlag(Map<Integer, ArrayList<String>> classMap) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for(int i=0; i<2; i++){
+            locationIndex = resetLocationIndex(locationIndex,16);
+            stringBuffer.append(classMap.get(lineIndex).get(locationIndex));
+        }
+        switch (stringBuffer.toString()){
+            case "0021": {klass.setAccess_flags("0x0021[public]");break;}
+            case "0011": {klass.setAccess_flags("TODO");break;}
+            case "0401": {klass.setAccess_flags("TODO");break;}
+            case "2001": {klass.setAccess_flags("TODO");break;}
+            case "4001": {klass.setAccess_flags("TODO");break;}
+            case "4000": {klass.setAccess_flags("TODO");break;}
+
+        }
+        return true;
+    }
+
+    public boolean resolveKlassName(Map<Integer, ArrayList<String>> classMap){
+        StringBuffer thisKlassName = new StringBuffer();
+        StringBuffer superKlassName = new StringBuffer();
+        for(int i=0; i<2; i++){
+            locationIndex = resetLocationIndex(locationIndex,16);
+            thisKlassName.append(classMap.get(lineIndex).get(locationIndex));
+        }
+        for(int i=0; i<2; i++){
+            locationIndex = resetLocationIndex(locationIndex,16);
+            superKlassName.append(classMap.get(lineIndex).get(locationIndex));
+        }
+        klass.setKlass_name(thisKlassName.toString());
+        klass.setSuper_klass_name(superKlassName.toString());
+        resolveInterfaces(classMap);
+        return true;
+    }
+
+    public boolean resolveInterfaces(Map<Integer, ArrayList<String>> classMap){
+        ArrayList<KInterface> interfaces = new ArrayList<>();
+        StringBuffer interfaceCountString = new StringBuffer();
+        for(int i=0; i<2;i++){
+            locationIndex = resetLocationIndex(locationIndex,16);
+            interfaceCountString.append(classMap.get(lineIndex).get(locationIndex));
+        }
+        int interfaceCount = Integer.parseInt(interfaceCountString.toString(), 16);
+        klass.setInterface_count(interfaceCount);
+
+        for(int i=0; i<interfaceCount; i++){
+            KInterface kInterface = new KInterface();
+            StringBuffer stringBuffer = new StringBuffer();
+            for(int j=0; j<2; j++){
+                locationIndex = resetLocationIndex(locationIndex,16);
+                stringBuffer.append(classMap.get(lineIndex).get(locationIndex));
+            }
+            kInterface.setClassValues(stringBuffer.toString());
+            interfaces.add(kInterface);
+        }
+        return true;
+    }
+
+    public boolean resolveField(Map<Integer, ArrayList<String>> classMap){
+        ArrayList<Attribute> attributes = new ArrayList<>();
+        StringBuffer attributeCountString = new StringBuffer();
+        for(int i=0; i<2;i++){
+            locationIndex = resetLocationIndex(locationIndex,16);
+            attributeCountString.append(classMap.get(lineIndex).get(locationIndex));
+        }
+        int attributeCount = Integer.parseInt(attributeCountString.toString(), 16);
+        klass.setInterface_count(attributeCount);
+        return true;
+    }
+
+    public boolean resolveMethod(Map<Integer, ArrayList<String>> classMap){
+        return true;
+    }
+
+    public boolean resolveAttribute(Map<Integer, ArrayList<String>> classMap){
+        return true;
+    }
+
+
+    public StringBuffer resolveBytes(Map<Integer, ArrayList<String>> classMap,int count){
+        StringBuffer stringBuffer = new StringBuffer();
+        for(int i=0; i<count;i++){
+            locationIndex = resetLocationIndex(locationIndex,16);
+            stringBuffer.append(classMap.get(lineIndex).get(locationIndex));
+        }
+        return stringBuffer;
     }
 }
