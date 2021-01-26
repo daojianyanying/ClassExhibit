@@ -4,6 +4,7 @@ import com.common.people.klass.exhibit.core.*;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ public class ResolveClass {
         resolveConstantPool(classMap);
         resolveAccessFlag(classMap);
         resolveKlassName(classMap);
+        resolveField(classMap);
         return this.klass;
     }
 
@@ -329,18 +331,37 @@ public class ResolveClass {
             kInterface.setClassValues(stringBuffer.toString());
             interfaces.add(kInterface);
         }
+        klass.setInterfaces(interfaces);
         return true;
     }
 
     public boolean resolveField(Map<Integer, ArrayList<String>> classMap){
-        ArrayList<Attribute> attributes = new ArrayList<>();
-        StringBuffer attributeCountString = new StringBuffer();
-        for(int i=0; i<2;i++){
-            locationIndex = resetLocationIndex(locationIndex,16);
-            attributeCountString.append(classMap.get(lineIndex).get(locationIndex));
+        klass.setField_count(Integer.parseInt(resolveBytes(classMap,2).toString(),16));
+        ArrayList<Field> fields = new ArrayList<>();
+        for(int i=0; i<klass.getField_count(); i++){
+            Field field = new Field();
+            ArrayList<Attribute> attributes = new ArrayList<>();
+            field.setAccessFlag(resolveBytes(classMap,2).toString())
+                    .setNameIndex(Integer.parseInt(resolveBytes(classMap,2).toString(),16))
+                    .setDescriptionIndex(Integer.parseInt(resolveBytes(classMap,2).toString(),16))
+                    .setAttributeCount(Integer.parseInt(resolveBytes(classMap,2).toString(),16));
+            for(int j=0; j<field.getAttributeCount(); j++){
+                Attribute attribute = new Attribute();
+                attribute.setNameIndex(Integer.parseInt(resolveBytes(classMap,2).toString(),16))
+                        .setLength(Integer.parseInt(resolveBytes(classMap,4).toString(),16));
+                ArrayList<Info> infos = new ArrayList<>();
+                for(int infoCount=0; infoCount<attribute.getLength(); infoCount++){
+                    Info info = new Info();
+                    info.setValue(resolveBytes(classMap,1).toString());
+                    infos.add(info);
+                }
+                attribute.setInfos(infos);
+                attributes.add(attribute);
+            }
+            field.setAttributes(attributes);
+            fields.add(field);
         }
-        int attributeCount = Integer.parseInt(attributeCountString.toString(), 16);
-        klass.setInterface_count(attributeCount);
+        klass.setFields(fields);
         return true;
     }
 

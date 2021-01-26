@@ -29,7 +29,7 @@ public class Klass {
     //域的个数
     private Integer field_count;
     //域
-    private Field fields;
+    private ArrayList<Field> fields;
     //方法个数
     private Integer method_count;
     //方法
