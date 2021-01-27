@@ -33,9 +33,9 @@ public class Klass {
     //方法个数
     private Integer method_count;
     //方法
-    private Method methods;
+    private ArrayList<Method> methods;
     //附加属性个数
     private Integer attribute_count;
     //附加属性
-    private Attribute additionalAttributes;
+    private ArrayList<Attribute> additionalAttributes;
 }

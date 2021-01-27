@@ -1,6 +1,7 @@
 package com.common.people.klass.exhibit.read;
 
 import com.common.people.klass.exhibit.core.*;
+import com.sun.javaws.IconUtil;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
@@ -336,23 +337,23 @@ public class ResolveClass {
     }
 
     public boolean resolveField(Map<Integer, ArrayList<String>> classMap){
-        klass.setField_count(Integer.parseInt(resolveBytes(classMap,2).toString(),16));
+        klass.setField_count(readBytes2Integer(classMap,2));
         ArrayList<Field> fields = new ArrayList<>();
         for(int i=0; i<klass.getField_count(); i++){
             Field field = new Field();
             ArrayList<Attribute> attributes = new ArrayList<>();
-            field.setAccessFlag(resolveBytes(classMap,2).toString())
-                    .setNameIndex(Integer.parseInt(resolveBytes(classMap,2).toString(),16))
-                    .setDescriptionIndex(Integer.parseInt(resolveBytes(classMap,2).toString(),16))
-                    .setAttributeCount(Integer.parseInt(resolveBytes(classMap,2).toString(),16));
+            field.setAccessFlag(readBytes2String(classMap,2))
+                    .setNameIndex(readBytes2Integer(classMap,2))
+                    .setDescriptionIndex(readBytes2Integer(classMap,2))
+                    .setAttributeCount(readBytes2Integer(classMap,2));
             for(int j=0; j<field.getAttributeCount(); j++){
                 Attribute attribute = new Attribute();
-                attribute.setNameIndex(Integer.parseInt(resolveBytes(classMap,2).toString(),16))
-                        .setLength(Integer.parseInt(resolveBytes(classMap,4).toString(),16));
+                attribute.setNameIndex(readBytes2Integer(classMap,2))
+                        .setLength(readBytes2Integer(classMap,4));
                 ArrayList<Info> infos = new ArrayList<>();
                 for(int infoCount=0; infoCount<attribute.getLength(); infoCount++){
                     Info info = new Info();
-                    info.setValue(resolveBytes(classMap,1).toString());
+                    info.setValue(readBytes2String(classMap,1));
                     infos.add(info);
                 }
                 attribute.setInfos(infos);
@@ -362,24 +363,75 @@ public class ResolveClass {
             fields.add(field);
         }
         klass.setFields(fields);
+
+        resolveMethod(classMap);
         return true;
     }
 
     public boolean resolveMethod(Map<Integer, ArrayList<String>> classMap){
+        klass.setMethod_count(readBytes2Integer(classMap,2));
+        ArrayList<Method> methods = new ArrayList<>();
+        for(int methodCount=0; methodCount<klass.getMethod_count(); methodCount++){
+            Method method = new Method();
+            ArrayList<Attribute> attributes = new ArrayList<>();
+            method.setAccessFlag(readBytes2String(classMap,2))
+                    .setNameIndex(readBytes2Integer(classMap,2))
+                    .setDescriptionIndex(readBytes2Integer(classMap,2))
+                    .setAttributeCount(readBytes2Integer(classMap,2));
+            for(int attributeCount=0; attributeCount<method.getAttributeCount(); attributeCount++){
+                Attribute attribute = new Attribute();
+                ArrayList<Info> infos = new ArrayList<>();
+                attribute.setNameIndex(readBytes2Integer(classMap,2))
+                        .setLength(readBytes2Integer(classMap,4));
+                for(int infoCount=0; infoCount<attribute.getLength(); infoCount++){
+                    Info info = new Info();
+                    info.setValue(readBytes2String(classMap,1));
+                    infos.add(info);
+                }
+                attribute.setInfos(infos);
+                attributes.add(attribute);
+            }
+            method.setAttributes(attributes);
+            methods.add(method);
+        }
+        klass.setMethods(methods);
+
+        resolveAttribute(classMap);
         return true;
     }
 
     public boolean resolveAttribute(Map<Integer, ArrayList<String>> classMap){
+        klass.setAttribute_count(readBytes2Integer(classMap,2));
+        ArrayList<Attribute> attributes = new ArrayList<>();
+        for (int attributeCount=0; attributeCount<klass.getAttribute_count(); attributeCount++){
+            Attribute attribute = new Attribute();
+            ArrayList<Info> infos = new ArrayList<>();
+            attribute.setNameIndex(readBytes2Integer(classMap,2))
+                    .setLength(readBytes2Integer(classMap,4));
+            for(int infoCount = 0; infoCount<attribute.getLength(); infoCount++){
+                Info info = new Info();
+                info.setValue(readBytes2String(classMap,1));
+                infos.add(info);
+            }
+            attribute.setInfos(infos);
+            attributes.add(attribute);
+        }
+        klass.setAdditionalAttributes(attributes);
         return true;
     }
 
 
-    public StringBuffer resolveBytes(Map<Integer, ArrayList<String>> classMap,int count){
+    public String readBytes2String(Map<Integer, ArrayList<String>> classMap,int count){
         StringBuffer stringBuffer = new StringBuffer();
         for(int i=0; i<count;i++){
             locationIndex = resetLocationIndex(locationIndex,16);
             stringBuffer.append(classMap.get(lineIndex).get(locationIndex));
         }
-        return stringBuffer;
+        return stringBuffer.toString();
+    }
+
+    public Integer readBytes2Integer(Map<Integer, ArrayList<String>> classMap,int count){
+        String bytes2String = readBytes2String(classMap,count);
+        return Integer.parseInt(bytes2String,16);
     }
 }
