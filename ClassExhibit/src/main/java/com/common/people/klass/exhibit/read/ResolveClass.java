@@ -1,6 +1,7 @@
 package com.common.people.klass.exhibit.read;
 
-import com.common.people.klass.exhibit.core.*;
+import com.common.people.klass.exhibit.entity.constant.*;
+import com.common.people.klass.exhibit.entity.trunk.*;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
@@ -49,7 +50,6 @@ public class ResolveClass {
             }else{
                 tag = classMap.get(lineIndex).get(++locationIndex);
             }
-
 
             switch(tag){
                 case "01": {

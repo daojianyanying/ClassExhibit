@@ -1,6 +1,8 @@
-package com.common.people.klass.exhibit.core;
+package com.common.people.klass.exhibit.entity.constant;
 
-public class DoubleConstantInfo implements Constant{
+import com.common.people.klass.exhibit.entity.trunk.Constant;
+
+public class DoubleConstantInfo implements Constant {
     private String TAG = "6";
     private static final String DESCRIPTION = "CONSTANT_Double_info,双精度字面量长度为8个字节";
 

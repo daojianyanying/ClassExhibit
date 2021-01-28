@@ -1,6 +1,8 @@
-package com.common.people.klass.exhibit.core;
+package com.common.people.klass.exhibit.entity.constant;
 
-public class FloatConstantInfo implements Constant{
+import com.common.people.klass.exhibit.entity.trunk.Constant;
+
+public class FloatConstantInfo implements Constant {
     private String TAG = "4";
     private static final String DESCRIPTION = "CONSTANT_Float_info,整型字面量长度为4个字节";
 

@@ -1,4 +1,4 @@
-package com.common.people.klass.exhibit.core;
+package com.common.people.klass.exhibit.entity.trunk;
 
 import java.util.ArrayList;
 

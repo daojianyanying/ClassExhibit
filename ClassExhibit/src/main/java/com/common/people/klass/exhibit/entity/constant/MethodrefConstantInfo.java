@@ -1,6 +1,8 @@
-package com.common.people.klass.exhibit.core;
+package com.common.people.klass.exhibit.entity.constant;
 
-public class MethodrefConstantInfo implements Constant{
+import com.common.people.klass.exhibit.entity.trunk.Constant;
+
+public class MethodrefConstantInfo implements Constant {
     private static final String TAG = "10";
     private static final String DESCRIPTION = "相当于Constant_Methond_Info,方法类型所占字节长度为5";
 

@@ -1,7 +1,5 @@
 package com.common.people.klass.exhibit.read;
 
-import com.common.people.klass.exhibit.core.Klass;
-
 import java.io.*;
 import java.util.*;
 

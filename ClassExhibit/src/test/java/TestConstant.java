@@ -1,4 +1,5 @@
-import com.common.people.klass.exhibit.core.*;
+import com.common.people.klass.exhibit.entity.constant.*;
+import com.common.people.klass.exhibit.entity.trunk.Constant;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package com.common.people.klass.exhibit.core;
+package com.common.people.klass.exhibit.entity.constant;
 
-import java.util.Arrays;
+import com.common.people.klass.exhibit.entity.trunk.Constant;
 
 public class Utf8ConstantInfo implements Constant {
     private static final String TAG = "1";

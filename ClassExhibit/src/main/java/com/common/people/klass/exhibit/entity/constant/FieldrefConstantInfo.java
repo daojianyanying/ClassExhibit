@@ -1,6 +1,8 @@
-package com.common.people.klass.exhibit.core;
+package com.common.people.klass.exhibit.entity.constant;
 
-public class FieldrefConstantInfo implements Constant{
+import com.common.people.klass.exhibit.entity.trunk.Constant;
+
+public class FieldrefConstantInfo implements Constant {
     private static final String TAG = "9";
     private static final String DESCRIPTION = "相当于Constant_Fielder_Info,字段类型所占字节长度为5";
 

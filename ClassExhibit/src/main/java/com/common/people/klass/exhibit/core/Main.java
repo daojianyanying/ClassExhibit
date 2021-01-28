@@ -1,5 +1,8 @@
 package com.common.people.klass.exhibit.core;
 
+import com.common.people.klass.exhibit.entity.constant.StringConstantInfo;
+import com.common.people.klass.exhibit.entity.trunk.Constant;
+
 import java.nio.charset.Charset;
 
 public class Main {

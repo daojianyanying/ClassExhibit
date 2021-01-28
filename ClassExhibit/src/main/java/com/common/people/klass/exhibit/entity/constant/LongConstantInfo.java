@@ -1,6 +1,8 @@
-package com.common.people.klass.exhibit.core;
+package com.common.people.klass.exhibit.entity.constant;
 
-public class LongConstantInfo implements  Constant{
+import com.common.people.klass.exhibit.entity.trunk.Constant;
+
+public class LongConstantInfo implements Constant {
     private String TAG = "5";
     private static final String DESCRIPTION = "CONSTANT_Long_info,整型字面量长度为8个字节";
 

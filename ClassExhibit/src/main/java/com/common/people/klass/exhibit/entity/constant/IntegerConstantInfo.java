@@ -1,6 +1,8 @@
-package com.common.people.klass.exhibit.core;
+package com.common.people.klass.exhibit.entity.constant;
 
-public class IntegerConstantInfo implements Constant{
+import com.common.people.klass.exhibit.entity.trunk.Constant;
+
+public class IntegerConstantInfo implements Constant {
     private String TAG = "3";
     private static final String DESCRIPTION = "CONSTANT_Integer_info,整型字面量长度为4个字节";
 

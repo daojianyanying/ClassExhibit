@@ -1,6 +1,8 @@
-package com.common.people.klass.exhibit.core;
+package com.common.people.klass.exhibit.entity.constant;
 
-public class ClassConstantInfo implements  Constant{
+import com.common.people.klass.exhibit.entity.trunk.Constant;
+
+public class ClassConstantInfo implements Constant {
     private static final String TAG = "7";
     private static final String DESCRIPTION = "相当于Constant_Class_Info,所占字节长度为3";
 
