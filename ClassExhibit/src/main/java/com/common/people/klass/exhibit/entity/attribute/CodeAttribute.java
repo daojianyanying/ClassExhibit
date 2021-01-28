@@ -25,4 +25,94 @@ public class CodeAttribute implements Attribute{
     private Integer attributeInfoCount;
     //Code的属性
     private ArrayList<AttributeInfo> attributeInfos;
+
+    public CodeAttribute setNameIndex(String nameIndex) {
+        this.nameIndex = nameIndex;
+        return this;
+    }
+
+    public CodeAttribute setLength(Integer length) {
+        this.length = length;
+        return this;
+    }
+
+    public CodeAttribute setMaxStack(Integer maxStack) {
+        this.maxStack = maxStack;
+        return this;
+    }
+
+    public CodeAttribute setMaxLocals(Integer maxLocals) {
+        this.maxLocals = maxLocals;
+        return this;
+    }
+
+    public CodeAttribute setCodeLength(Integer codeLength) {
+        this.codeLength = codeLength;
+        return this;
+    }
+
+    public CodeAttribute setCodes(ArrayList<Code> codes) {
+        Codes = codes;
+        return this;
+    }
+
+    public CodeAttribute setExceptionTableLength(Integer exceptionTableLength) {
+        this.exceptionTableLength = exceptionTableLength;
+        return this;
+    }
+
+    public CodeAttribute setExceptionTables(ArrayList<ExceptionTable> exceptionTables) {
+        this.exceptionTables = exceptionTables;
+        return this;
+    }
+
+    public CodeAttribute setAttributeInfoCount(Integer attributeInfoCount) {
+        this.attributeInfoCount = attributeInfoCount;
+        return this;
+    }
+
+    public CodeAttribute setAttributeInfos(ArrayList<AttributeInfo> attributeInfos) {
+        this.attributeInfos = attributeInfos;
+        return this;
+    }
+
+    public String getNameIndex() {
+        return nameIndex;
+    }
+
+    public Integer getLength() {
+        return length;
+    }
+
+    public Integer getMaxStack() {
+        return maxStack;
+    }
+
+    public Integer getMaxLocals() {
+        return maxLocals;
+    }
+
+    public Integer getCodeLength() {
+        return codeLength;
+    }
+
+    public ArrayList<Code> getCodes() {
+        return Codes;
+    }
+
+    public Integer getExceptionTableLength() {
+        return exceptionTableLength;
+    }
+
+    public ArrayList<ExceptionTable> getExceptionTables() {
+        return exceptionTables;
+    }
+
+    public Integer getAttributeInfoCount() {
+        return attributeInfoCount;
+    }
+
+    public ArrayList<AttributeInfo> getAttributeInfos() {
+        return attributeInfos;
+    }
 }

@@ -29,5 +29,6 @@ public class FieldrefConstantInfo implements Constant {
     @Override
     public String getDescription() {
         return null;
+
     }
 }
