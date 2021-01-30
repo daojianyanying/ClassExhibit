@@ -1,10 +1,8 @@
 package com.common.people.klass.exhibit.entity.attribute;
 
-import com.sun.org.apache.bcel.internal.classfile.ExceptionTable;
-
 import java.util.ArrayList;
 
-public class CodeAttribute implements Attribute{
+public class CodeAttribute implements AttributeInfo{
     //属性的名称索引
     private String nameIndex;
     //属性的长度
@@ -114,5 +112,47 @@ public class CodeAttribute implements Attribute{
 
     public ArrayList<AttributeInfo> getAttributeInfos() {
         return attributeInfos;
+    }
+}
+class ExceptionTable{
+    private Integer startPC;
+    private Integer endPC;
+    private Integer handlerPC;
+    private Integer catchType;
+
+    public ExceptionTable setStartPC(Integer startPC) {
+        this.startPC = startPC;
+        return this;
+    }
+
+    public ExceptionTable setEndPC(Integer endPC) {
+        this.endPC = endPC;
+        return this;
+    }
+
+    public ExceptionTable setHandlerPC(Integer handlerPC) {
+        this.handlerPC = handlerPC;
+        return this;
+    }
+
+    public ExceptionTable setCatchType(Integer catchType) {
+        this.catchType = catchType;
+        return this;
+    }
+
+    public Integer getStartPC() {
+        return startPC;
+    }
+
+    public Integer getEndPC() {
+        return endPC;
+    }
+
+    public Integer getHandlerPC() {
+        return handlerPC;
+    }
+
+    public Integer getCatchType() {
+        return catchType;
     }
 }

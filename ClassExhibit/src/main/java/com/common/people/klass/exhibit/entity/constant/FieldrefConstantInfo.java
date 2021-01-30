@@ -22,6 +22,8 @@ public class FieldrefConstantInfo implements Constant {
         return this;
     }
 
+
+
     public void setNameAndTypeIndex(String nameAndTypeIndex){
         this.nameAndTypeIndex = nameAndTypeIndex;
     }
