@@ -2,6 +2,8 @@ package com.common.people.klass.exhibit.entity.constant;
 
 import com.common.people.klass.exhibit.entity.trunk.Constant;
 
+import java.util.ArrayList;
+
 public class IntegerConstantInfo implements Constant {
     private String TAG = "3";
     private static final String DESCRIPTION = "CONSTANT_Integer_info,整型字面量长度为4个字节";
@@ -27,5 +29,10 @@ public class IntegerConstantInfo implements Constant {
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public void setIndexValue(ArrayList<Constant> constants) {
+
     }
 }

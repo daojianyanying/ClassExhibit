@@ -2,6 +2,8 @@ package com.common.people.klass.exhibit.entity.constant;
 
 import com.common.people.klass.exhibit.entity.trunk.Constant;
 
+import java.util.ArrayList;
+
 public class LongConstantInfo implements Constant {
     private String TAG = "5";
     private static final String DESCRIPTION = "CONSTANT_Long_info,整型字面量长度为8个字节";
@@ -33,5 +35,10 @@ public class LongConstantInfo implements Constant {
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public void setIndexValue(ArrayList<Constant> constants) {
+
     }
 }

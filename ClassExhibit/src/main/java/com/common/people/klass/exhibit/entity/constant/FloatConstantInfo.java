@@ -2,6 +2,8 @@ package com.common.people.klass.exhibit.entity.constant;
 
 import com.common.people.klass.exhibit.entity.trunk.Constant;
 
+import java.util.ArrayList;
+
 public class FloatConstantInfo implements Constant {
     private String TAG = "4";
     private static final String DESCRIPTION = "CONSTANT_Float_info,整型字面量长度为4个字节";
@@ -31,5 +33,10 @@ public class FloatConstantInfo implements Constant {
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public void setIndexValue(ArrayList<Constant> constants) {
+
     }
 }

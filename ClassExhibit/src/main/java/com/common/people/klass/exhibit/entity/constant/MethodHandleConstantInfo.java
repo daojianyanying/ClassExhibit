@@ -2,6 +2,8 @@ package com.common.people.klass.exhibit.entity.constant;
 
 import com.common.people.klass.exhibit.entity.trunk.Constant;
 
+import java.util.ArrayList;
+
 public class MethodHandleConstantInfo implements Constant {
 
     private static final String TAG = "15";
@@ -10,6 +12,7 @@ public class MethodHandleConstantInfo implements Constant {
     private String classValue;
     private String referenceKind;
     private String referenceIndex;
+    private String referenceName;
 
     public MethodHandleConstantInfo setClassValue(String classValue){
         this.classValue = classValue;
@@ -26,8 +29,18 @@ public class MethodHandleConstantInfo implements Constant {
         return this;
     }
 
+    public String getReferenceName() {
+        return referenceName;
+    }
+
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public void setIndexValue(ArrayList<Constant> constants) {
+        Utf8ConstantInfo utf8ConstantInfo = (Utf8ConstantInfo)constants.get(Integer.parseInt(this.referenceIndex));
+        this.referenceName = new String(utf8ConstantInfo.getBytes());
     }
 }

@@ -38,7 +38,7 @@ public class ResolveClass {
     public Integer resolveConstantPool(Map<Integer, ArrayList<String>> classMap){
         ConstantPool constantPool = new ConstantPool();
         ArrayList<Constant> constants = new ArrayList<>();
-        constants.add(null);
+        constants.add(new NullConstantInfo());
         //读取常量池的数量
         String constantCount = classMap.get(lineIndex).get(locationIndex) + classMap.get(lineIndex).get(++locationIndex);
         klass.setConstant_count(Integer.parseInt(constantCount,16) - 1);
@@ -241,7 +241,11 @@ public class ResolveClass {
                 }
             }
         }
+
         constantPool.setConstants(constants);
+        for(int i=0; i<constants.size();i++){
+            constants.get(i).setIndexValue(constants);
+        }
         klass.setConstant_pool(constantPool);
         return lineIndex;
     }

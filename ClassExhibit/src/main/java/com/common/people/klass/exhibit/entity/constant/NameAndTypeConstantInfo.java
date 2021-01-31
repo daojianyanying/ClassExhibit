@@ -2,6 +2,8 @@ package com.common.people.klass.exhibit.entity.constant;
 
 import com.common.people.klass.exhibit.entity.trunk.Constant;
 
+import java.util.ArrayList;
+
 public class NameAndTypeConstantInfo implements Constant {
 
     private static final String TAG = "12";
@@ -10,7 +12,9 @@ public class NameAndTypeConstantInfo implements Constant {
     private String classValue;
 
     private String nameIndex;
+    private String name;
     private String descriptionIndex;
+    private String descriptionName;
 
 
     public NameAndTypeConstantInfo setClassValue(String classValue){
@@ -28,8 +32,36 @@ public class NameAndTypeConstantInfo implements Constant {
         return this;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescriptionName() {
+        return descriptionName;
+    }
+
+    public String getClassValue() {
+        return classValue;
+    }
+
+    public String getNameIndex() {
+        return nameIndex;
+    }
+
+    public String getDescriptionIndex() {
+        return descriptionIndex;
+    }
+
     @Override
     public String getDescription() {
-        return null;
+        return DESCRIPTION;
+    }
+
+    @Override
+    public void setIndexValue(ArrayList<Constant> constants) {
+        Utf8ConstantInfo nameUtf8ConstantInfo = (Utf8ConstantInfo)constants.get(Integer.parseInt(nameIndex,16));
+        this.name = new String(nameUtf8ConstantInfo.getBytes());
+        Utf8ConstantInfo descriptionUtf8ConstantInfo = (Utf8ConstantInfo)constants.get(Integer.parseInt(descriptionIndex,16));
+        this.descriptionName = new String(descriptionUtf8ConstantInfo.getBytes());
     }
 }

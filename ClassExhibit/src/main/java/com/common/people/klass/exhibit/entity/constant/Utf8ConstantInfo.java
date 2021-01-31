@@ -2,6 +2,8 @@ package com.common.people.klass.exhibit.entity.constant;
 
 import com.common.people.klass.exhibit.entity.trunk.Constant;
 
+import java.util.ArrayList;
+
 public class Utf8ConstantInfo implements Constant {
     private static final String TAG = "1";
     //解释utf-8_constant_info的作用
@@ -12,6 +14,7 @@ public class Utf8ConstantInfo implements Constant {
 
     private Integer length;
     private byte[] bytes;
+    private String name;
 
     public void setClassValue(String classValue){
         this.classValue = classValue;
@@ -23,10 +26,24 @@ public class Utf8ConstantInfo implements Constant {
 
     public void setBytes(byte[] bytes){
         this.bytes = bytes;
+        this.name = new String(bytes);
+    }
+
+    public byte[] getBytes() {
+        return bytes;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public void setIndexValue(ArrayList<Constant> constants) {
+
     }
 }

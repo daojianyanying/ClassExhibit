@@ -2,6 +2,8 @@ package com.common.people.klass.exhibit.entity.constant;
 
 import com.common.people.klass.exhibit.entity.trunk.Constant;
 
+import java.util.ArrayList;
+
 public class DoubleConstantInfo implements Constant {
     private String TAG = "6";
     private static final String DESCRIPTION = "CONSTANT_Double_info,双精度字面量长度为8个字节";
@@ -35,5 +37,10 @@ public class DoubleConstantInfo implements Constant {
     @Override
     public String getDescription() {
         return DESCRIPTION;
+    }
+
+    @Override
+    public void setIndexValue(ArrayList<Constant> constants) {
+
     }
 }
