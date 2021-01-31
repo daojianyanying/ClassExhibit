@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Attribute {
     private Integer nameIndex;
     private Integer length;
-    private ArrayList<Attribute> infos;
+    private ArrayList<Info> infos;
 
     public Attribute setNameIndex(Integer nameIndex) {
         this.nameIndex = nameIndex;
@@ -17,7 +17,7 @@ public class Attribute {
         return this;
     }
 
-    public Attribute setInfos(ArrayList<Attribute> infos) {
+    public Attribute setInfos(ArrayList<Info> infos) {
         this.infos = infos;
         return this;
     }
@@ -30,7 +30,7 @@ public class Attribute {
         return length;
     }
 
-    public ArrayList<Attribute> getInfos() {
+    public ArrayList<Info> getInfos() {
         return infos;
     }
 

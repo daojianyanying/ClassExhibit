@@ -350,7 +350,7 @@ public class ResolveClass {
                 Attribute attribute = new Attribute();
                 attribute.setNameIndex(readBytes2Integer(classMap,2))
                         .setLength(readBytes2Integer(classMap,4));
-                ArrayList<Attribute> infos = new ArrayList<>();
+                ArrayList<Info> infos = new ArrayList<>();
                 for(int infoCount=0; infoCount<attribute.getLength(); infoCount++){
                     Info info = new Info();
                     info.setValue(readBytes2String(classMap,1));
@@ -385,12 +385,13 @@ public class ResolveClass {
                     .setAttributeCount(readBytes2Integer(classMap,2));
             for(int attributeCount=0; attributeCount<method.getAttributeCount(); attributeCount++){
                 Attribute attribute = new Attribute();
-                ArrayList<Attribute> infos = new ArrayList<>();
+                ArrayList<Info> infos = new ArrayList<>();
                 attribute.setNameIndex(readBytes2Integer(classMap,2))
                         .setLength(readBytes2Integer(classMap,4));
                 for(int infoCount=0; infoCount<attribute.getLength(); infoCount++){
-
-
+                    Info info = new Info();
+                    info.setValue(readBytes2String(classMap,1));
+                    infos.add(info);
                 }
                 attribute.setInfos(infos);
                 attributes.add(attribute);
@@ -409,7 +410,7 @@ public class ResolveClass {
         ArrayList<Attribute> attributes = new ArrayList<>();
         for (int attributeCount=0; attributeCount<klass.getAttribute_count(); attributeCount++){
             Attribute attribute = new Attribute();
-            ArrayList<Attribute> infos = new ArrayList<>();
+            ArrayList<Info> infos = new ArrayList<>();
             attribute.setNameIndex(readBytes2Integer(classMap,2))
                     .setLength(readBytes2Integer(classMap,4));
             for(int infoCount = 0; infoCount<attribute.getLength(); infoCount++){
