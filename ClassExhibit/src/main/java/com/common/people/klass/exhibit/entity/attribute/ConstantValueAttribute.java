@@ -1,14 +1,11 @@
 package com.common.people.klass.exhibit.entity.attribute;
 
-public class ConstantValueAttribute implements AttributeInfo{
+import com.common.people.klass.exhibit.entity.trunk.Attribute;
+
+public class ConstantValueAttribute extends Attribute implements AttributeInfo{
     private String nameIndex;
     private Integer length;
     private Integer constantValueIndex;
-
-    public String getNameIndex() {
-        return nameIndex;
-
-    }
 
     public ConstantValueAttribute setNameIndex(String nameIndex) {
         this.nameIndex = nameIndex;

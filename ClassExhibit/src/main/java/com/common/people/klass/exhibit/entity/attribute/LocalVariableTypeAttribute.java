@@ -1,16 +1,14 @@
 package com.common.people.klass.exhibit.entity.attribute;
 
+import com.common.people.klass.exhibit.entity.trunk.Attribute;
+
 import java.util.ArrayList;
 
-public class LocalVariableTypeAttribute implements AttributeInfo{
+public class LocalVariableTypeAttribute extends Attribute implements AttributeInfo{
     private String nameIndex;
     private Integer length;
     private Integer localVariableTypeLength;
     private ArrayList<LocalVariableTypeTable> LocalVariableTypeTables;
-
-    public String getNameIndex() {
-        return nameIndex;
-    }
 
     public Integer getLength() {
         return length;

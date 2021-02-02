@@ -1,8 +1,10 @@
 package com.common.people.klass.exhibit.entity.attribute;
 
+import com.common.people.klass.exhibit.entity.trunk.Attribute;
+
 import java.util.ArrayList;
 
-public class LineNumberAttribute implements AttributeInfo {
+public class LineNumberAttribute extends Attribute implements AttributeInfo {
     private String nameIndex;
     private Integer length;
     private Integer lineNumberTableLength;
@@ -26,10 +28,6 @@ public class LineNumberAttribute implements AttributeInfo {
     public LineNumberAttribute setLineNumberTables(ArrayList<LineNumberTable> lineNumberTables) {
         this.lineNumberTables = lineNumberTables;
         return this;
-    }
-
-    public String getNameIndex() {
-        return nameIndex;
     }
 
     public Integer getLength() {

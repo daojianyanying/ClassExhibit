@@ -1,8 +1,10 @@
 package com.common.people.klass.exhibit.entity.attribute;
 
+import com.common.people.klass.exhibit.entity.trunk.Attribute;
+
 import java.util.ArrayList;
 
-public class CodeAttribute implements AttributeInfo{
+public class CodeAttribute extends Attribute implements AttributeInfo {
     //属性的名称索引
     private String nameIndex;
     //属性的长度
@@ -72,10 +74,6 @@ public class CodeAttribute implements AttributeInfo{
     public CodeAttribute setAttributeInfos(ArrayList<AttributeInfo> attributeInfos) {
         this.attributeInfos = attributeInfos;
         return this;
-    }
-
-    public String getNameIndex() {
-        return nameIndex;
     }
 
     public Integer getLength() {
