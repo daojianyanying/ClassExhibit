@@ -1,8 +1,10 @@
 package com.common.people.klass.exhibit.entity.trunk;
 
+import com.common.people.klass.exhibit.entity.attribute.AttributeInfo;
+
 import java.util.ArrayList;
 
-public class Attribute {
+public class Attribute implements AttributeInfo {
     private Integer nameIndex;
     private Integer length;
     private ArrayList<Info> infos;

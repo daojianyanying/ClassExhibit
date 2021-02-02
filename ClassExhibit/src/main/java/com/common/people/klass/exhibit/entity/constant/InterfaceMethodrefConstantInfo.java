@@ -45,7 +45,8 @@ public class InterfaceMethodrefConstantInfo implements Constant {
 
     @Override
     public void setIndexValue(ArrayList<Constant> constants) {
-        Utf8ConstantInfo utf8ConstantInfo = (Utf8ConstantInfo)constants.get(Integer.parseInt(classIndex,16));
+        ClassConstantInfo classConstantInfo = (ClassConstantInfo)constants.get(Integer.parseInt(classIndex,16));
+        Utf8ConstantInfo utf8ConstantInfo = (Utf8ConstantInfo)constants.get(Integer.parseInt(classConstantInfo.getNameIndex(),16));
         this.className = new String(utf8ConstantInfo.getBytes());
         NameAndTypeConstantInfo nameAndTypeConstantInfo = (NameAndTypeConstantInfo)constants.get(Integer.parseInt(this.nameAndTypeIndex,16));
         Utf8ConstantInfo nameUtf8ConstantInfo = (Utf8ConstantInfo)constants.get(Integer.parseInt(nameAndTypeConstantInfo.getNameIndex(),16));;

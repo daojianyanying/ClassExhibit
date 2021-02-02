@@ -46,8 +46,8 @@ public class MethodrefConstantInfo implements Constant {
 
     @Override
     public void setIndexValue(ArrayList<Constant> constants) {
-        ClassConstantInfo classConstantInfoInfo = (ClassConstantInfo)constants.get(Integer.parseInt(classIndex));
-        Utf8ConstantInfo utf8ConstantInfo = (Utf8ConstantInfo)constants.get(Integer.parseInt(classConstantInfoInfo.getNameIndex()));
+        ClassConstantInfo classConstantInfoInfo = (ClassConstantInfo)constants.get(Integer.parseInt(classIndex,16));
+        Utf8ConstantInfo utf8ConstantInfo = (Utf8ConstantInfo)constants.get(Integer.parseInt(classConstantInfoInfo.getNameIndex(),16));
         this.className = new String(utf8ConstantInfo.getBytes());
         NameAndTypeConstantInfo nameAndTypeConstantInfo = (NameAndTypeConstantInfo)constants.get(Integer.parseInt(this.nameAndTypeIndex,16));
         Utf8ConstantInfo nameUtf8ConstantInfo = (Utf8ConstantInfo)constants.get(Integer.parseInt(nameAndTypeConstantInfo.getNameIndex(),16));;
