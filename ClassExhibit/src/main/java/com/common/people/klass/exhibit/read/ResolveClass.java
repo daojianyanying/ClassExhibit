@@ -345,30 +345,13 @@ public class ResolveClass {
         ArrayList<Field> fields = new ArrayList<>();
         for(int i=0; i<klass.getField_count(); i++){
             Field field = new Field();
-            ArrayList<Attribute> attributes = new ArrayList<>();
+            ArrayList<Attribute> injectAttributes = null;
             field.setAccessFlag(readBytes2String(classMap,2))
                     .setNameIndex(readBytes2Integer(classMap,2))
                     .setDescriptionIndex(readBytes2Integer(classMap,2))
                     .setAttributeCount(readBytes2Integer(classMap,2));
-            //for(int j=0; j<field.getAttributeCount(); j++){
-                //Attribute attribute = new Attribute();
-                //attribute.setNameIndex(readBytes2Integer(classMap,2))
-                        //.setLength(readBytes2Integer(classMap,4));
-                //读取Attribute
-                //Utf8ConstantInfo attributeTypeUtf8ConstantInfo = (Utf8ConstantInfo)this.klass.getConstant_pool().getConstants().get(attribute.getNameIndex());
-                //String attributeType = new String(attributeTypeUtf8ConstantInfo.getBytes());
-                ArrayList<Attribute> injectAttributes = injectAttribute(classMap,field.getAttributeCount());
-                System.out.println("test test test test");
-               // ArrayList<Info> infos = new ArrayList<>();
-               // for(int infoCount=0; infoCount<attribute.getLength(); infoCount++){
-                  //  Info info = new Info();
-                   // info.setValue(readBytes2String(classMap,1));
-                  //  infos.add(info);
-               // }
-                //attribute.setInfos(infos);
-                //attributes.add(attribute);
-            //}
-            //field.setAttributes(attributes);
+            injectAttributes = injectAttribute(classMap,field.getAttributeCount());
+            field.setAttributes(injectAttributes);
             fields.add(field);
         }
         klass.setFields(fields);
@@ -387,25 +370,14 @@ public class ResolveClass {
         ArrayList<Method> methods = new ArrayList<>();
         for(int methodCount=0; methodCount<klass.getMethod_count(); methodCount++){
             Method method = new Method();
-            ArrayList<Attribute> attributes = new ArrayList<>();
+            ArrayList<Attribute> injectAttributes = null;
             method.setAccessFlag(readBytes2String(classMap,2))
                     .setNameIndex(readBytes2Integer(classMap,2))
                     .setDescriptionIndex(readBytes2Integer(classMap,2))
                     .setAttributeCount(readBytes2Integer(classMap,2));
-            for(int attributeCount=0; attributeCount<method.getAttributeCount(); attributeCount++){
-                Attribute attribute = new Attribute();
-                ArrayList<Info> infos = new ArrayList<>();
-                attribute.setNameIndex(readBytes2Integer(classMap,2))
-                        .setLength(readBytes2Integer(classMap,4));
-                for(int infoCount=0; infoCount<attribute.getLength(); infoCount++){
-                    Info info = new Info();
-                    info.setValue(readBytes2String(classMap,1));
-                    infos.add(info);
-                }
-                attribute.setInfos(infos);
-                attributes.add(attribute);
-            }
-            method.setAttributes(attributes);
+
+            injectAttributes = injectAttribute(classMap,method.getAttributeCount());
+            method.setAttributes(injectAttributes);
             methods.add(method);
         }
         klass.setMethods(methods);
@@ -483,7 +455,13 @@ public class ResolveClass {
                         exceptionTables.add(exceptionTable);
                     }
                     codeAttribute.setExceptionTables(exceptionTables);
-
+                    int codeAttributeAttributeLength = readBytes2Integer(classMap,2);
+                    ArrayList<Attribute> codeAttributeAttributes = new ArrayList<>();
+                    if(codeAttributeAttributeLength != 0){
+                        codeAttributeAttributes = injectAttribute(classMap,codeAttributeAttributeLength);
+                    }
+                    codeAttribute.setAttributeInfoCount(codeAttributeAttributeLength)
+                            .setAttributeInfos(codeAttributeAttributes);
                     attributes.add(codeAttribute);
                     break;
                 } case "ConstantValue":{
@@ -493,7 +471,7 @@ public class ResolveClass {
                             .setConstantValueIndex(readBytes2Integer(classMap,2));
                     attributes.add(constantValueAttribute);
                     break;
-                } case "LineNumber":{
+                } case "LineNumberTable":{
                     LineNumberAttribute lineNumberAttribute = new LineNumberAttribute();
                     ArrayList<LineNumberTable> lineNumberTables = new ArrayList<>();
                     lineNumberAttribute.setNameIndex(nameIndex)
@@ -508,10 +486,11 @@ public class ResolveClass {
                     lineNumberAttribute.setLineNumberTables(lineNumberTables);
                     attributes.add(lineNumberAttribute);
                     break;
-                } case "LocalVariable":{
+                } case "LocalVariableTable":{
                     LocalVariableTypeAttribute localVariableTypeAttribute = new LocalVariableTypeAttribute();
                     localVariableTypeAttribute.setNameIndex(nameIndex)
-                            .setLength(length);
+                            .setLength(length)
+                            .setLocalVariableTypeLength(readBytes2Integer(classMap,2));
                     ArrayList<LocalVariableTypeTable> localVariableTypeTables = new ArrayList<>();
                     for(int localVariableTypeCount=0; localVariableTypeCount<localVariableTypeAttribute.getLocalVariableTypeLength();localVariableTypeCount++){
                         LocalVariableTypeTable localVariableTypeTable = new LocalVariableTypeTable();
@@ -530,11 +509,17 @@ public class ResolveClass {
                     sourceFileAttribute.setNameIndex(Integer.parseInt(nameIndex))
                             .setLength(length)
                             .setSourceFileIndex(readBytes2Integer(classMap,2));
+                    attributes.add(sourceFileAttribute);
+                    break;
+                } case "Signature":{
+                    SignatureAttribute signatureAttribute = new SignatureAttribute();
+                    signatureAttribute.setNameIndex(readBytes2Integer(classMap,2))
+                            .setLength(readBytes2Integer(classMap,4));
+                    attributes.add(signatureAttribute);
+                    break;
                 }
             }
         }
-
-
         return  attributes;
     }
 }

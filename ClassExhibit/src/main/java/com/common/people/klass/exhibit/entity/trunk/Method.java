@@ -8,6 +8,12 @@ public class Method {
     public Integer descriptionIndex;
     public Integer attributeCount;
     public ArrayList attributes = new ArrayList<Attribute>();
+    private String attributeLength;
+
+    public Method setAttributeLength(String attributeLength) {
+        this.attributeLength = attributeLength;
+        return this;
+    }
 
     public Method setAccessFlag(String accessFlag){
         this.accessFlag = accessFlag;

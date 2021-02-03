@@ -24,7 +24,7 @@ public class CodeAttribute extends Attribute implements AttributeInfo {
     //Code的属性表
     private Integer attributeInfoCount;
     //Code的属性
-    private ArrayList<AttributeInfo> attributeInfos;
+    private ArrayList<Attribute> attributes;
 
     public CodeAttribute setNameIndex(String nameIndex) {
         this.nameIndex = nameIndex;
@@ -71,8 +71,8 @@ public class CodeAttribute extends Attribute implements AttributeInfo {
         return this;
     }
 
-    public CodeAttribute setAttributeInfos(ArrayList<AttributeInfo> attributeInfos) {
-        this.attributeInfos = attributeInfos;
+    public CodeAttribute setAttributeInfos(ArrayList<Attribute> attributes) {
+        this.attributes = attributes;
         return this;
     }
 
@@ -108,7 +108,7 @@ public class CodeAttribute extends Attribute implements AttributeInfo {
         return attributeInfoCount;
     }
 
-    public ArrayList<AttributeInfo> getAttributeInfos() {
-        return attributeInfos;
+    public ArrayList<Attribute> getAttributeInfos() {
+        return attributes;
     }
 }
