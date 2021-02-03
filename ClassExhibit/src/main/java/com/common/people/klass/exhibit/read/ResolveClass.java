@@ -350,20 +350,25 @@ public class ResolveClass {
                     .setNameIndex(readBytes2Integer(classMap,2))
                     .setDescriptionIndex(readBytes2Integer(classMap,2))
                     .setAttributeCount(readBytes2Integer(classMap,2));
-            for(int j=0; j<field.getAttributeCount(); j++){
-                Attribute attribute = new Attribute();
-                attribute.setNameIndex(readBytes2Integer(classMap,2))
-                        .setLength(readBytes2Integer(classMap,4));
-                ArrayList<Info> infos = new ArrayList<>();
-                for(int infoCount=0; infoCount<attribute.getLength(); infoCount++){
-                    Info info = new Info();
-                    info.setValue(readBytes2String(classMap,1));
-                    infos.add(info);
-                }
-                attribute.setInfos(infos);
-                attributes.add(attribute);
-            }
-            field.setAttributes(attributes);
+            //for(int j=0; j<field.getAttributeCount(); j++){
+                //Attribute attribute = new Attribute();
+                //attribute.setNameIndex(readBytes2Integer(classMap,2))
+                        //.setLength(readBytes2Integer(classMap,4));
+                //读取Attribute
+                //Utf8ConstantInfo attributeTypeUtf8ConstantInfo = (Utf8ConstantInfo)this.klass.getConstant_pool().getConstants().get(attribute.getNameIndex());
+                //String attributeType = new String(attributeTypeUtf8ConstantInfo.getBytes());
+                ArrayList<Attribute> injectAttributes = injectAttribute(classMap,field.getAttributeCount());
+                System.out.println("test test test test");
+               // ArrayList<Info> infos = new ArrayList<>();
+               // for(int infoCount=0; infoCount<attribute.getLength(); infoCount++){
+                  //  Info info = new Info();
+                   // info.setValue(readBytes2String(classMap,1));
+                  //  infos.add(info);
+               // }
+                //attribute.setInfos(infos);
+                //attributes.add(attribute);
+            //}
+            //field.setAttributes(attributes);
             fields.add(field);
         }
         klass.setFields(fields);
@@ -444,70 +449,92 @@ public class ResolveClass {
         return Integer.parseInt(bytes2String,16);
     }
 
-    public void injectAttribute(Map<Integer, ArrayList<String>> classMap, String attributeType){
-        switch(attributeType){
-            case "Code":{
-                CodeAttribute codeAttribute = new CodeAttribute();
-                ArrayList<Code> codes = new ArrayList<>();
-                codeAttribute.setNameIndex(readBytes2String(classMap,2))
-                        .setLength(readBytes2Integer(classMap,4))
-                        .setMaxStack(readBytes2Integer(classMap,2))
-                        .setMaxLocals(readBytes2Integer(classMap,2))
-                        .setCodeLength(readBytes2Integer(classMap,4));
-                for(int codeCount=0; codeCount<codeAttribute.getCodeLength(); codeCount++){
-                    Code code = new Code();
-                    code.setCodeValues(readBytes2String(classMap,1));
-                    codes.add(code);
+    public ArrayList<Attribute> injectAttribute(Map<Integer, ArrayList<String>> classMap, Integer attributeCount){
+        ArrayList<Attribute> attributes = new ArrayList<>();
+        for(int i=0; i<attributeCount; i++){
+            String nameIndex = readBytes2String(classMap,2);
+            //读取Attribute
+            Utf8ConstantInfo attributeTypeUtf8ConstantInfo = (Utf8ConstantInfo)this.klass.getConstant_pool().getConstants().get(Integer.parseInt(nameIndex,16));
+            String attributeType = new String(attributeTypeUtf8ConstantInfo.getBytes());
+            int length = readBytes2Integer(classMap,4);
+
+            switch(attributeType){
+                case "Code":{
+                    CodeAttribute codeAttribute = new CodeAttribute();
+                    ArrayList<Code> codes = new ArrayList<>();
+                    codeAttribute.setNameIndex(nameIndex)
+                            .setLength(length)
+                            .setMaxStack(readBytes2Integer(classMap,2))
+                            .setMaxLocals(readBytes2Integer(classMap,2))
+                            .setCodeLength(readBytes2Integer(classMap,4));
+                    for(int codeCount=0; codeCount<codeAttribute.getCodeLength(); codeCount++){
+                        Code code = new Code();
+                        code.setCodeValues(readBytes2String(classMap,1));
+                        codes.add(code);
+                    }
+                    codeAttribute.setCodes(codes).setExceptionTableLength(readBytes2Integer(classMap,2));
+                    ArrayList<ExceptionTable> exceptionTables = new ArrayList<>();
+                    for(int exceptionTableCount=0; exceptionTableCount<codeAttribute.getExceptionTableLength(); exceptionTableCount++){
+                        ExceptionTable exceptionTable = new ExceptionTable();
+                        exceptionTable.setStartPC(readBytes2Integer(classMap,2))
+                                .setEndPC(readBytes2Integer(classMap,2))
+                                .setHandlerPC(readBytes2Integer(classMap,2))
+                                .setCatchType(readBytes2Integer(classMap,2));
+                        exceptionTables.add(exceptionTable);
+                    }
+                    codeAttribute.setExceptionTables(exceptionTables);
+
+                    attributes.add(codeAttribute);
+                    break;
+                } case "ConstantValue":{
+                    ConstantValueAttribute constantValueAttribute = new ConstantValueAttribute();
+                    constantValueAttribute.setNameIndex(nameIndex)
+                            .setLength(length)
+                            .setConstantValueIndex(readBytes2Integer(classMap,2));
+                    attributes.add(constantValueAttribute);
+                    break;
+                } case "LineNumber":{
+                    LineNumberAttribute lineNumberAttribute = new LineNumberAttribute();
+                    ArrayList<LineNumberTable> lineNumberTables = new ArrayList<>();
+                    lineNumberAttribute.setNameIndex(nameIndex)
+                            .setLength(length)
+                            .setLineNumberTableLength(readBytes2Integer(classMap,2));
+                    for(int lineNumberTableCount=0; lineNumberTableCount<lineNumberAttribute.getLineNumberTableLength(); lineNumberTableCount++){
+                        LineNumberTable lineNumberTable = new LineNumberTable();
+                        lineNumberTable.setStartPC(readBytes2Integer(classMap,2))
+                                .setLineNumber(readBytes2Integer(classMap,2));
+                        lineNumberTables.add(lineNumberTable);
+                    }
+                    lineNumberAttribute.setLineNumberTables(lineNumberTables);
+                    attributes.add(lineNumberAttribute);
+                    break;
+                } case "LocalVariable":{
+                    LocalVariableTypeAttribute localVariableTypeAttribute = new LocalVariableTypeAttribute();
+                    localVariableTypeAttribute.setNameIndex(nameIndex)
+                            .setLength(length);
+                    ArrayList<LocalVariableTypeTable> localVariableTypeTables = new ArrayList<>();
+                    for(int localVariableTypeCount=0; localVariableTypeCount<localVariableTypeAttribute.getLocalVariableTypeLength();localVariableTypeCount++){
+                        LocalVariableTypeTable localVariableTypeTable = new LocalVariableTypeTable();
+                        localVariableTypeTable.setStartPC(readBytes2Integer(classMap,2))
+                                .setLength(readBytes2Integer(classMap,2))
+                                .setNameIndex(readBytes2Integer(classMap,2))
+                                .setSignatureIndex(readBytes2Integer(classMap,2))
+                                .setIndex(readBytes2Integer(classMap,2));
+                        localVariableTypeTables.add(localVariableTypeTable);
+                    }
+                    localVariableTypeAttribute.setLocalVariableTypeTables(localVariableTypeTables);
+                    attributes.add(localVariableTypeAttribute);
+                    break;
+                } case "SourceFile":{
+                    SourceFileAttribute sourceFileAttribute = new SourceFileAttribute();
+                    sourceFileAttribute.setNameIndex(Integer.parseInt(nameIndex))
+                            .setLength(length)
+                            .setSourceFileIndex(readBytes2Integer(classMap,2));
                 }
-                codeAttribute.setCodes(codes).setExceptionTableLength(readBytes2Integer(classMap,2));
-                ArrayList<ExceptionTable> exceptionTables = new ArrayList<>();
-                for(int exceptionTableCount=0; exceptionTableCount<codeAttribute.getExceptionTableLength(); exceptionTableCount++){
-                    ExceptionTable exceptionTable = new ExceptionTable();
-                    exceptionTable.setStartPC(readBytes2Integer(classMap,2))
-                            .setEndPC(readBytes2Integer(classMap,2))
-                            .setHandlerPC(readBytes2Integer(classMap,2))
-                            .setCatchType(readBytes2Integer(classMap,2));
-                    exceptionTables.add(exceptionTable);
-                }
-                codeAttribute.setExceptionTables(exceptionTables);
-                break;
-            } case "ConstantValue":{
-                ConstantValueAttribute constantValueAttribute = new ConstantValueAttribute();
-                constantValueAttribute.setNameIndex(readBytes2String(classMap,2))
-                        .setLength(readBytes2Integer(classMap,4))
-                        .setConstantValueIndex(readBytes2Integer(classMap,2));
-                break;
-            } case "LineNumber":{
-                LineNumberAttribute lineNumberAttribute = new LineNumberAttribute();
-                ArrayList<LineNumberTable> lineNumberTables = new ArrayList<>();
-                lineNumberAttribute.setNameIndex(readBytes2String(classMap,2))
-                        .setLength(readBytes2Integer(classMap,4))
-                        .setLineNumberTableLength(readBytes2Integer(classMap,2));
-                for(int lineNumberTableCount=0; lineNumberTableCount<lineNumberAttribute.getLineNumberTableLength(); lineNumberTableCount++){
-                    LineNumberTable lineNumberTable = new LineNumberTable();
-                    lineNumberTable.setStartPC(readBytes2Integer(classMap,2))
-                            .setLineNumber(readBytes2Integer(classMap,2));
-                    lineNumberTables.add(lineNumberTable);
-                }
-                lineNumberAttribute.setLineNumberTables(lineNumberTables);
-                break;
-            } case "LocalVariable":{
-                LocalVariableTypeAttribute localVariableTypeAttribute = new LocalVariableTypeAttribute();
-                localVariableTypeAttribute.setNameIndex(readBytes2String(classMap,2))
-                        .setLength(readBytes2Integer(classMap,4));
-                ArrayList<LocalVariableTypeTable> localVariableTypeTables = new ArrayList<>();
-                for(int localVariableTypeCount=0; localVariableTypeCount<localVariableTypeAttribute.getLocalVariableTypeLength();localVariableTypeCount++){
-                    LocalVariableTypeTable localVariableTypeTable = new LocalVariableTypeTable();
-                    localVariableTypeTable.setStartPC(readBytes2Integer(classMap,2))
-                            .setLength(readBytes2Integer(classMap,2))
-                            .setNameIndex(readBytes2Integer(classMap,2))
-                            .setSignatureIndex(readBytes2Integer(classMap,2))
-                            .setIndex(readBytes2Integer(classMap,2));
-                    localVariableTypeTables.add(localVariableTypeTable);
-                }
-                localVariableTypeAttribute.setLocalVariableTypeTables(localVariableTypeTables);
-                break;
             }
         }
+
+
+        return  attributes;
     }
 }
