@@ -349,7 +349,8 @@ public class ResolveClass {
             field.setAccessFlag(readBytes2String(classMap,2))
                     .setNameIndex(readBytes2Integer(classMap,2))
                     .setDescriptionIndex(readBytes2Integer(classMap,2))
-                    .setAttributeCount(readBytes2Integer(classMap,2));
+                    .setAttributeCount(readBytes2Integer(classMap,2))
+                    .setIndex(this.klass.getConstant_pool().getConstants());
             injectAttributes = injectAttribute(classMap,field.getAttributeCount());
             field.setAttributes(injectAttributes);
             fields.add(field);

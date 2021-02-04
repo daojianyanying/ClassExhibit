@@ -1,13 +1,18 @@
 package com.common.people.klass.exhibit.entity.trunk;
 
+import com.common.people.klass.exhibit.entity.constant.Utf8ConstantInfo;
+
 import java.util.ArrayList;
 
 public class Field {
-    public String accessFlag;
-    public Integer nameIndex;
-    public Integer descriptionIndex;
-    public Integer attributeCount;
-    public ArrayList attributes = new ArrayList<Attribute>();
+    private String accessFlag;
+    private Integer nameIndex;
+    private Integer descriptionIndex;
+    private Integer attributeCount;
+    private ArrayList attributes = new ArrayList<Attribute>();
+
+    private String name;
+    private String description;
 
     public Field setAccessFlag(String accessFlag){
         this.accessFlag = accessFlag;
@@ -32,6 +37,12 @@ public class Field {
     public Field setAttributes(ArrayList attributes) {
         this.attributes = attributes;
         return this;
+    }
+
+    public Field setIndex(ArrayList<Constant> constants){
+        this.name =new String(((Utf8ConstantInfo)constants.get(nameIndex)).getBytes());
+        this.description = new String(((Utf8ConstantInfo)constants.get(descriptionIndex)).getBytes());
+        return  this;
     }
 
     public String getAccessFlag() {
