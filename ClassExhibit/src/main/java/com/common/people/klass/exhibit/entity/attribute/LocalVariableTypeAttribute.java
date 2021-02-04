@@ -4,42 +4,49 @@ import com.common.people.klass.exhibit.entity.trunk.Attribute;
 
 import java.util.ArrayList;
 
-public class LocalVariableTypeAttribute extends Attribute implements AttributeInfo{
-    private String nameIndex;
+public class LocalVariableTypeAttribute extends Attribute implements AttributeInfo {
+    private Integer nameIndex;
     private Integer length;
-    private Integer localVariableTypeLength;
-    private ArrayList<LocalVariableTypeTable> LocalVariableTypeTables;
+    private Integer localVariableTypeTableLength;
+    private ArrayList<LocalVariableTypeTable> localVariableTypeTables;
 
-    public Integer getLength() {
-        return length;
-    }
-
-    public Integer getLocalVariableTypeLength() {
-        return localVariableTypeLength;
-    }
-
-    public ArrayList<LocalVariableTypeTable> getLocalVariableTypeTables() {
-        return LocalVariableTypeTables;
-    }
-
-    public LocalVariableTypeAttribute setNameIndex(String nameIndex) {
+    @Override
+    public LocalVariableTypeAttribute setNameIndex(Integer nameIndex) {
         this.nameIndex = nameIndex;
         return this;
     }
 
+    @Override
     public LocalVariableTypeAttribute setLength(Integer length) {
         this.length = length;
         return this;
     }
 
-    public LocalVariableTypeAttribute setLocalVariableTypeLength(Integer localVariableTypeLength) {
-        this.localVariableTypeLength = localVariableTypeLength;
+    public LocalVariableTypeAttribute setLocalVariableTypeTableLength(Integer localVariableTypeTableLength) {
+        this.localVariableTypeTableLength = localVariableTypeTableLength;
         return this;
     }
 
-    public LocalVariableTypeAttribute setLocalVariableTypeTables(ArrayList<LocalVariableTypeTable> LocalVariableTypeTables) {
-        this.LocalVariableTypeTables = LocalVariableTypeTables;
+    @Override
+    public Integer getNameIndex() {
+        return nameIndex;
+    }
+
+    @Override
+    public Integer getLength() {
+        return length;
+    }
+
+    public Integer getLocalVariableTypeTableLength() {
+        return localVariableTypeTableLength;
+    }
+
+    public ArrayList<LocalVariableTypeTable> getLocalVariableTypeTables() {
+        return localVariableTypeTables;
+    }
+
+    public LocalVariableTypeAttribute setLocalVariableTypeTables(ArrayList<LocalVariableTypeTable> localVariableTypeTables) {
+        this.localVariableTypeTables = localVariableTypeTables;
         return this;
     }
 }
-

@@ -1,33 +1,33 @@
 package com.common.people.klass.exhibit.entity.attribute;
 
-public class LocalVariableTypeTable {
+public class LocalVariableTable {
     private Integer startPC;
     private Integer length;
     private Integer nameIndex;
-    private Integer signatureIndex;
+    private Integer descriptorIndex;
     private Integer index;
 
-    public LocalVariableTypeTable setStartPC(Integer startPC) {
+    public LocalVariableTable setStartPC(Integer startPC) {
         this.startPC = startPC;
         return this;
     }
 
-    public LocalVariableTypeTable setLength(Integer length) {
+    public LocalVariableTable setLength(Integer length) {
         this.length = length;
         return this;
     }
 
-    public LocalVariableTypeTable setNameIndex(Integer nameIndex) {
+    public LocalVariableTable setNameIndex(Integer nameIndex) {
         this.nameIndex = nameIndex;
         return this;
     }
 
-    public LocalVariableTypeTable setSignatureIndex(Integer signatureIndex) {
-        this.signatureIndex = signatureIndex;
+    public LocalVariableTable setSignatureIndex(Integer descriptorIndex) {
+        this.descriptorIndex = descriptorIndex;
         return this;
     }
 
-    public LocalVariableTypeTable setIndex(Integer index) {
+    public LocalVariableTable setIndex(Integer index) {
         this.index = index;
         return this;
     }
@@ -44,8 +44,8 @@ public class LocalVariableTypeTable {
         return nameIndex;
     }
 
-    public Integer getSignatureIndex() {
-        return signatureIndex;
+    public Integer getDescriptorIndex() {
+        return descriptorIndex;
     }
 
     public Integer getIndex() {

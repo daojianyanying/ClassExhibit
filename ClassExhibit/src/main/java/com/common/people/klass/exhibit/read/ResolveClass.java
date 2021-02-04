@@ -487,22 +487,22 @@ public class ResolveClass {
                     attributes.add(lineNumberAttribute);
                     break;
                 } case "LocalVariableTable":{
-                    LocalVariableTypeAttribute localVariableTypeAttribute = new LocalVariableTypeAttribute();
-                    localVariableTypeAttribute.setNameIndex(nameIndex)
+                    LocalVariableAttribute localVariableAttribute = new LocalVariableAttribute();
+                    localVariableAttribute.setNameIndex(nameIndex)
                             .setLength(length)
                             .setLocalVariableTypeLength(readBytes2Integer(classMap,2));
-                    ArrayList<LocalVariableTypeTable> localVariableTypeTables = new ArrayList<>();
-                    for(int localVariableTypeCount=0; localVariableTypeCount<localVariableTypeAttribute.getLocalVariableTypeLength();localVariableTypeCount++){
-                        LocalVariableTypeTable localVariableTypeTable = new LocalVariableTypeTable();
-                        localVariableTypeTable.setStartPC(readBytes2Integer(classMap,2))
+                    ArrayList<LocalVariableTable> localVariableTables = new ArrayList<>();
+                    for(int localVariableTypeCount = 0; localVariableTypeCount< localVariableAttribute.getLocalVariableTypeLength(); localVariableTypeCount++){
+                        LocalVariableTable localVariableTable = new LocalVariableTable();
+                        localVariableTable.setStartPC(readBytes2Integer(classMap,2))
                                 .setLength(readBytes2Integer(classMap,2))
                                 .setNameIndex(readBytes2Integer(classMap,2))
                                 .setSignatureIndex(readBytes2Integer(classMap,2))
                                 .setIndex(readBytes2Integer(classMap,2));
-                        localVariableTypeTables.add(localVariableTypeTable);
+                        localVariableTables.add(localVariableTable);
                     }
-                    localVariableTypeAttribute.setLocalVariableTypeTables(localVariableTypeTables);
-                    attributes.add(localVariableTypeAttribute);
+                    localVariableAttribute.setLocalVariableTypeTables(localVariableTables);
+                    attributes.add(localVariableAttribute);
                     break;
                 } case "SourceFile":{
                     SourceFileAttribute sourceFileAttribute = new SourceFileAttribute();
@@ -516,6 +516,33 @@ public class ResolveClass {
                     signatureAttribute.setNameIndex(readBytes2Integer(classMap,2))
                             .setLength(readBytes2Integer(classMap,4));
                     attributes.add(signatureAttribute);
+                    break;
+                } case "LocalVariableTypeTable":{
+                    LocalVariableTypeAttribute localVariableTypeAttribute = new LocalVariableTypeAttribute();
+                    ArrayList<LocalVariableTypeTable> LocalVariableTypeTables = new ArrayList<>();
+                    localVariableTypeAttribute.setNameIndex(Integer.parseInt(nameIndex,16))
+                            .setLength(length)
+                            .setLocalVariableTypeTableLength(readBytes2Integer(classMap,2));
+                    for(int localVariableTableLength=0; localVariableTableLength<localVariableTypeAttribute.getLocalVariableTypeTableLength();localVariableTableLength++){
+                        LocalVariableTypeTable localVariableTypeTable = new LocalVariableTypeTable();
+                        localVariableTypeTable.setStartPC(readBytes2Integer(classMap,2))
+                                .setLength(readBytes2Integer(classMap,2))
+                                .setNameIndex(readBytes2Integer(classMap,2))
+                                .setSignatureIndex(readBytes2Integer(classMap,2))
+                                .setIndex(readBytes2Integer(classMap,2));
+                        LocalVariableTypeTables.add(localVariableTypeTable);
+                    }
+                    localVariableTypeAttribute.setLocalVariableTypeTables(LocalVariableTypeTables);
+                    attributes.add(localVariableTypeAttribute);
+                    break;
+                } case "StackMapTable":{
+                    StackMapAttribute stackMapAttribute = new StackMapAttribute();
+                    stackMapAttribute.setEntriesLength(Integer.parseInt(nameIndex,16))
+                            .setLength(length)
+                            .setEntriesLength(readBytes2Integer(classMap,2));
+                    //TODO
+                    readBytes2Integer(classMap,length);
+                    attributes.add(stackMapAttribute);
                     break;
                 }
             }
