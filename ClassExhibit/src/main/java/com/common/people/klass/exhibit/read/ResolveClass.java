@@ -513,8 +513,9 @@ public class ResolveClass {
                     break;
                 } case "Signature":{
                     SignatureAttribute signatureAttribute = new SignatureAttribute();
-                    signatureAttribute.setNameIndex(readBytes2Integer(classMap,2))
-                            .setLength(readBytes2Integer(classMap,4));
+                    signatureAttribute.setNameIndex(Integer.parseInt(nameIndex,16))
+                            .setLength(length)
+                            .setSignatureIndex(readBytes2Integer(classMap,2));
                     attributes.add(signatureAttribute);
                     break;
                 } case "LocalVariableTypeTable":{
@@ -537,11 +538,11 @@ public class ResolveClass {
                     break;
                 } case "StackMapTable":{
                     StackMapAttribute stackMapAttribute = new StackMapAttribute();
-                    stackMapAttribute.setEntriesLength(Integer.parseInt(nameIndex,16))
-                            .setLength(length)
-                            .setEntriesLength(readBytes2Integer(classMap,2));
+                    stackMapAttribute.setNameIndex(Integer.parseInt(nameIndex,16))
+                            .setLength(length);
+                            //.setEntriesLength(readBytes2Integer(classMap,2));
                     //TODO
-                    readBytes2Integer(classMap,length);
+                    String s = readBytes2String(classMap,length);
                     attributes.add(stackMapAttribute);
                     break;
                 }

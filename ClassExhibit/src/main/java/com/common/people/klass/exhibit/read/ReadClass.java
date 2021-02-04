@@ -6,7 +6,8 @@ import java.util.*;
 public class ReadClass {
     private static final String CLASS_PATH = "D:\\tools-idea\\github\\ClassExhibit\\ClassExhibit\\target\\classes\\com" +
             "\\common\\people\\klass\\exhibit\\entity\\constant\\FieldrefConstantInfo.txt";
-
+    private static final String CLASS_PATH_ADD = "D:\\tools-idea\\github\\ClassExhibit\\ClassExhibit\\target" +
+            "\\classes\\com\\common\\people\\klass\\exhibit\\read\\ResolveClass.txt";
     public static void main(String[] args) {
         try {
             FileInputStream inputStream = new FileInputStream(new File(CLASS_PATH));
