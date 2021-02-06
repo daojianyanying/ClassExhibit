@@ -4,7 +4,7 @@ import com.common.people.klass.exhibit.entity.trunk.Constant;
 
 import java.util.ArrayList;
 
-public class InvokeDynamicConstantInfo implements Constant{
+public class InvokeDynamicConstantInfo implements Constant {
     private static final String TAG = "18";
     private static final String DESCRIPTION = "用于表示invokedynamic指令所用到的引导方法、参数、返回类型,并可以给引导方法传入一系列称为静态参数的常量" +
             "引导方法所用到的动态调用名称，相当于Constant_MethondHandle_Info,方法类型所占字节长度为4";
