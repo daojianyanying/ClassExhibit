@@ -546,7 +546,23 @@ public class ResolveClass {
                     String s = readBytes2String(classMap,length);
                     attributes.add(stackMapAttribute);
                     break;
+                }case "MethodParameters": {
+                    MethodParametersAttribute methodParametersAttribute = new MethodParametersAttribute();
+                    methodParametersAttribute.setNameIndex(Integer.parseInt(nameIndex,16))
+                            .setLength(length)
+                            .setParametersCount(readBytes2Integer(classMap,1));
+                    ArrayList<Parameter> parameters = new ArrayList<>();
+                    for(int parmetersCout=0; parmetersCout<methodParametersAttribute.getParametersCount(); parmetersCout++){
+                        Parameter parameter = new Parameter();
+                        parameter.setNameIndex(readBytes2Integer(classMap,2))
+                                .setAccessFlag(readBytes2Integer(classMap,2));
+                        parameters.add(parameter);
+                    }
+                    methodParametersAttribute.setParameters(parameters);
+                    attributes.add(methodParametersAttribute);
+                    break;
                 }
+
             }
         }
         return  attributes;
